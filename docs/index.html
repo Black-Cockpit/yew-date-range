@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yew-date-range — Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #fff;
+            padding: 64px 24px 48px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        main {
+            max-width: 800px;
+            margin: -32px auto 0;
+            padding: 0 24px 64px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card a.btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #3b82f6;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .card a.btn:hover {
+            background: #2563eb;
+        }
+
+        .card a.btn.secondary {
+            background: #64748b;
+        }
+
+        .card a.btn.secondary:hover {
+            background: #475569;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .examples .card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .examples .card p {
+            flex: 1;
+        }
+
+        @media (max-width: 640px) {
+            .examples {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .features {
+            margin-top: 8px;
+        }
+
+        .features li {
+            font-size: 0.9rem;
+            color: #475569;
+            padding: 4px 0;
+            list-style: none;
+        }
+
+        .features li::before {
+            content: "✓ ";
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .badge-row img {
+            height: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 16px;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            font-weight: 600;
+            color: #475569;
+            background: #f8fafc;
+        }
+
+        td {
+            color: #1e293b;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>yew-date-range</h1>
+        <p>A date range picker component library for Yew — inspired by react-date-range and PrimeReact Calendar. Built
+            entirely in Rust and WebAssembly.</p>
+        <div class="badge-row">
+            <a href="https://github.com/Black-Cockpit/yew-date-range/actions"><img
+                    src="https://github.com/Black-Cockpit/yew-date-range/workflows/CI/badge.svg" alt="CI"></a>
+            <a href="https://crates.io/crates/yew-date-range"><img
+                    src="https://img.shields.io/crates/v/yew-date-range.svg" alt="Crates.io"></a>
+            <a href="https://github.com/Black-Cockpit/yew-date-range/blob/master/LICENSE"><img
+                    src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="examples">
+            <div class="card">
+                <h2>Default Example</h2>
+                <p>CSS-based styling with 10 interactive demos covering all components and features.</p>
+                <a class="btn" href="./example/">Open Default Example →</a>
+            </div>
+            <div class="card">
+                <h2>Tailwind Example</h2>
+                <p>Tailwind CSS styling with dark/light theme toggle and all 10 use cases.</p>
+                <a class="btn secondary" href="./example-tailwind/">Open Tailwind Example →</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Components</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>DateRangePicker</code></td>
+                        <td>Full picker with predefined range sidebar and multi-month calendar</td>
+                    </tr>
+                    <tr>
+                        <td><code>DateRange</code></td>
+                        <td>Standalone range calendar without sidebar</td>
+                    </tr>
+                    <tr>
+                        <td><code>DatePicker</code></td>
+                        <td>Versatile picker with single, range, and multiple selection modes</td>
+                    </tr>
+                    <tr>
+                        <td><code>Calendar</code></td>
+                        <td>Base calendar with drill-down (Days → Months → Years)</td>
+                    </tr>
+                    <tr>
+                        <td><code>TimePicker</code></td>
+                        <td>Time spinner with 12h/24h format and seconds support</td>
+                    </tr>
+                    <tr>
+                        <td><code>Overlay</code></td>
+                        <td>Popup overlay with outside-click and Escape-key dismissal</td>
+                    </tr>
+                    <tr>
+                        <td><code>DefinedRange</code></td>
+                        <td>Sidebar with predefined ranges (Today, This Week, etc.)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Features</h2>
+            <ul class="features">
+                <li>Single date, date range, and multiple date selection</li>
+                <li>Inline and popup display modes with click/focus triggers</li>
+                <li>Predefined range sidebar (Today, Yesterday, This Week, etc.)</li>
+                <li>12-hour and 24-hour time picker with AM/PM toggle</li>
+                <li>Min/max date constraints, disabled dates, disabled weekdays, disabled ranges</li>
+                <li>Min/max span constraints for range selection</li>
+                <li>Drill-down calendar navigation (Days → Months → Years)</li>
+                <li>Custom date format patterns (yyyy-MM-dd, dd/MM/yyyy, etc.)</li>
+                <li>Week numbers, custom locale, custom colors</li>
+                <li>ARIA labels on all interactive elements</li>
+                <li>Automatic CSS injection — no manual stylesheet setup</li>
+                <li>100% safe Rust — no unsafe, no unwrap, no expect</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Installation</h2>
+            <p>Add to your <code>Cargo.toml</code>:</p>
+            <pre style="background:#f1f5f9;padding:16px;border-radius:8px;font-size:0.85rem;overflow-x:auto"><code>[dependencies]
+yew-date-range = "0.1"</code></pre>
+            <p style="margin-top:12px">For the headless core only:</p>
+            <pre style="background:#f1f5f9;padding:16px;border-radius:8px;font-size:0.85rem;overflow-x:auto"><code>[dependencies]
+yew-date-range-core = "0.1"</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>Internationalization (i18n)</h2>
+            <p>Every visible string in the picker is driven by <code>CalendarLocale</code>. Pass a <code>locale</code>
+                prop to any component to translate the entire UI.</p>
+            <p style="margin-top:8px"><strong>Option 1 — Browser Intl API:</strong> Use
+                <code>LocaleHelper::for_locale("fr")</code> or <code>CalendarLocale::from_bcp47("de")</code> to
+                auto-resolve month and day names from the browser's native <code>Intl.DateTimeFormat</code>.
+            </p>
+            <p style="margin-top:8px"><strong>Option 2 — Manual override:</strong> Override any field on
+                <code>CalendarLocale</code> using struct update syntax.
+            </p>
+            <pre
+                style="background:#f1f5f9;padding:16px;border-radius:8px;font-size:0.85rem;overflow-x:auto;margin-top:12px"><code>// Auto-resolve French month/day names via Intl
+let locale = LocaleHelper::for_locale("fr");
+
+// Or override specific labels manually
+let locale = CalendarLocale {
+    today_label: "Custom Today".into(),
+    clear_label: "Custom Clear".into(),
+    ..CalendarLocale::from_bcp47("de")
+};
+
+html! { &lt;DateRangePicker locale={locale} ... /&gt; }</code></pre>
+
+            <p style="margin-top:12px">All keys follow the <code>yew_date_range.*</code> namespace:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Namespace</th>
+                        <th>Keys</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>yew_date_range.nav.*</code></td>
+                        <td>prev_month_label, next_month_label, prev_year_label, next_year_label, prev_decade_label,
+                            next_decade_label, select_month_label, select_year_label</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.display.*</code></td>
+                        <td>start_date_placeholder, end_date_placeholder</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.action.*</code></td>
+                        <td>today_label, clear_label</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.input.*</code></td>
+                        <td>select_date_placeholder, select_range_placeholder, select_dates_placeholder</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.time.*</code></td>
+                        <td>increment_hour_label, decrement_hour_label, increment_minute_label, decrement_minute_label,
+                            increment_second_label, decrement_second_label, toggle_period_label</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.range.*</code></td>
+                        <td>today_range_label, yesterday_range_label, this_week_label, last_week_label,
+                            this_month_label, last_month_label</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.select.*</code></td>
+                        <td>select_prefix</td>
+                    </tr>
+                    <tr>
+                        <td><code>yew_date_range.week.*</code></td>
+                        <td>week_number_header</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Custom Styles</h2>
+            <p>The library auto-injects default CSS via <code>StyleInjector</code>. No manual stylesheet setup is
+                required. To customize, override specific <code>.rdr*</code> classes in your own stylesheet.</p>
+
+            <p style="margin-top:12px"><strong>Theme overrides:</strong></p>
+            <pre style="background:#f1f5f9;padding:16px;border-radius:8px;font-size:0.85rem;overflow-x:auto"><code>/* Override the primary accent color */
+.rdrStartEdge, .rdrEndEdge { background: #10b981; }
+.rdrStaticRangeSelected { color: #10b981; }
+.rdrDayTodayDot { background: #10b981; }</code></pre>
+
+            <p style="margin-top:12px"><strong>Programmatic injection:</strong> Use
+                <code>StyleInjector::inject_custom_css(css, id)</code> to inject additional CSS at runtime without
+                duplicates.
+            </p>
+
+            <p style="margin-top:12px"><strong>Dark mode:</strong> See the Tailwind example's
+                <code>dark-overrides.css</code> for a complete dark theme that overrides all <code>.rdr*</code> classes
+                under <code>html.dark</code>.
+            </p>
+
+            <p style="margin-top:12px"><strong>Key CSS classes:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Element</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.rdrCalendarWrapper</code></td>
+                        <td>Calendar container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrDateRangePickerWrapper</code></td>
+                        <td>Full picker container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrDefinedRangesWrapper</code></td>
+                        <td>Sidebar container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrMonth</code></td>
+                        <td>Single month grid</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrDay</code></td>
+                        <td>Day cell button</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrDayToday</code></td>
+                        <td>Today marker</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrDaySelected</code></td>
+                        <td>Selected day</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrStartEdge / .rdrEndEdge</code></td>
+                        <td>Range edges</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrInRange</code></td>
+                        <td>Range body highlight</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrOverlay</code></td>
+                        <td>Popup overlay</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrTimePicker</code></td>
+                        <td>Time picker container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.rdrDatePickerInput</code></td>
+                        <td>Popup input field</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Resources</h2>
+            <p>
+                <a class="btn" href="https://github.com/Black-Cockpit/yew-date-range">GitHub Repository →</a>
+                <a class="btn secondary" href="https://crates.io/crates/yew-date-range"
+                    style="margin-left:8px">crates.io →</a>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>yew-date-range &bull; MIT License &bull; <a href="https://github.com/Black-Cockpit/yew-date-range">GitHub</a>
+        </p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+# yew-date-range — UI Layer
+#
+# Yew components for the date range picker.
+# Built on top of `yew-date-range-core`, providing idiomatic Yew
+# components for calendar, date picker, and range selection.
+
+[package]
+name = "yew-date-range"
+version = "0.1.0"
+edition = "2021"
+description = "A date range picker component for Yew, inspired by react-date-range"
+license = "MIT"
+
+[dependencies]
+# Internal core crate with models and utilities.
+yew-date-range-core = { path = "../yew-date-range-core" }
+
+# Yew framework for WebAssembly frontend development.
+yew = { version = "0.21", features = ["csr"] }
+
+# Date and time library with WASM support.
+time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+
+# WebAssembly browser API bindings.
+web-sys = { version = "0.3", features = [
+    "HtmlElement",
+    "HtmlInputElement",
+    "MouseEvent",
+    "KeyboardEvent",
+    "DomRect",
+    "Element",
+    "FocusEvent",
+    "WheelEvent",
+    "Window",
+    "Document",
+] }
+
+# Rust-to-JavaScript interop layer for WebAssembly.
+wasm-bindgen = "0.2"
+
+# Gloo utilities for WebAssembly browser APIs.
+gloo = { version = "0.11", features = ["timers", "events"] }

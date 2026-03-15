@@ -1,0 +1,32 @@
+# End-to-end browser tests for the yew-date-range examples.
+#
+# Uses Playwright (Chromium) to verify rendered DOM structure,
+# user interactions, and visual state across both examples.
+
+[package]
+name = "e2e-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dev-dependencies]
+# Browser automation via Playwright for Rust.
+playwright = "0.0.20"
+
+# Async runtime for test execution.
+tokio = { version = "1", features = ["full"] }
+
+# Static file server for serving the built examples.
+actix-web = "4"
+
+# Static file serving middleware.
+actix-files = "0.6"
+
+# CORS middleware for the test server.
+actix-cors = "0.7"
+
+# Serialization for Playwright JS interop.
+serde = { version = "1", features = ["derive"] }
+
+# JSON serialization for Playwright JS interop.
+serde_json = "1"

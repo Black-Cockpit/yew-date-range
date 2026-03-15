@@ -1,0 +1,25 @@
+# yew-date-range-core — Core Engine
+#
+# Headless core library for the yew-date-range date picker.
+# Contains models, utilities, and date logic without any UI dependencies.
+
+[package]
+name = "yew-date-range-core"
+version = "0.1.0"
+edition = "2021"
+description = "Core logic for yew-date-range: models, utilities, and date helpers"
+license = "MIT"
+
+[dependencies]
+# Date and time library with WASM support.
+time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+
+# JavaScript interop for WASM date access.
+js-sys = "0.3"
+
+# Rust-to-JavaScript interop layer for WebAssembly.
+wasm-bindgen = "0.2"
+
+[dev-dependencies]
+# Date macro support for tests.
+time = { version = "0.3", features = ["macros"] }

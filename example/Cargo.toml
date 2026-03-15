@@ -1,0 +1,16 @@
+# Example application for the yew-date-range library.
+
+[package]
+name = "yew-date-range-example"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Yew framework for WebAssembly frontend development.
+yew = { version = "0.21", features = ["csr"] }
+
+# Date and time library with macro support.
+time = { version = "0.3", features = ["formatting", "parsing", "macros"] }
+
+# The date range picker library.
+yew-date-range = { path = "../yew-date-range" }

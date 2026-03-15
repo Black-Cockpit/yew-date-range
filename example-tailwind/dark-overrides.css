@@ -1,0 +1,249 @@
+/* Dark mode overrides for yew-date-range components.
+   These override the library's auto-injected default CSS when
+   the <html> element has class="dark".
+   Developers can copy and adapt this file for their own themes. */
+
+html.dark .rdrCalendarWrapper,
+html.dark .rdrDateRangePickerWrapper,
+html.dark .rdrDateRangeWrapper,
+html.dark .rdrDatePickerInline {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+html.dark .rdrDateDisplayWrapper {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+html.dark .rdrDateInput {
+  background: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+html.dark .rdrDateInput:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+}
+
+html.dark .rdrMonthAndYearWrapper {
+  border-color: #334155;
+}
+
+html.dark .rdrNextPrevButton {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+html.dark .rdrNextPrevButton:hover {
+  background: #334155;
+  border-color: #64748b;
+}
+
+html.dark .rdrPrevButtonIcon::before {
+  border-color: transparent #94a3b8 transparent transparent;
+}
+
+html.dark .rdrNextButtonIcon::before {
+  border-color: transparent transparent transparent #94a3b8;
+}
+
+html.dark .rdrMonthPickerTitle,
+html.dark .rdrYearPickerTitle {
+  color: #e2e8f0;
+}
+
+html.dark .rdrMonthPickerTitle:hover,
+html.dark .rdrYearPickerTitle:hover {
+  background: #334155;
+  color: #60a5fa;
+}
+
+html.dark .rdrDecadeTitle {
+  color: #e2e8f0;
+}
+
+html.dark .rdrMonthPickerCell,
+html.dark .rdrYearPickerCell {
+  color: #e2e8f0;
+}
+
+html.dark .rdrMonthPickerCell:hover,
+html.dark .rdrYearPickerCell:hover {
+  background: #334155;
+  color: #60a5fa;
+}
+
+html.dark .rdrMonthPickerCellSelected,
+html.dark .rdrYearPickerCellSelected {
+  background: #3b82f6;
+  color: #fff;
+}
+
+html.dark .rdrMonthPickerCellSelected:hover,
+html.dark .rdrYearPickerCellSelected:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+html.dark .rdrWeekDay {
+  color: #64748b;
+}
+
+html.dark .rdrDayNumber span {
+  color: #e2e8f0;
+}
+
+html.dark .rdrDayPassive .rdrDayNumber span {
+  color: #475569;
+}
+
+html.dark .rdrDayDisabled .rdrDayNumber span {
+  color: #475569;
+}
+
+html.dark .rdrDayToday .rdrDayNumber span {
+  color: #60a5fa;
+}
+
+html.dark .rdrDayTodayDot {
+  background: #60a5fa;
+}
+
+html.dark .rdrDayWeekend .rdrDayNumber span {
+  color: #f87171;
+}
+
+html.dark .rdrDayWeekend.rdrDayPassive .rdrDayNumber span {
+  color: #7f1d1d;
+}
+
+html.dark .rdrMonth+.rdrMonth {
+  border-color: #334155;
+}
+
+html.dark .rdrDateDisplayItemSeparator {
+  color: #64748b;
+}
+
+html.dark .rdrDefinedRangesWrapper {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+html.dark .rdrStaticRange {
+  color: #e2e8f0;
+}
+
+html.dark .rdrStaticRange:hover {
+  background: #334155;
+}
+
+html.dark .rdrStaticRangeSelected {
+  color: #60a5fa;
+}
+
+html.dark .rdrStaticRangeSelected::before {
+  background: #60a5fa;
+}
+
+html.dark .rdrInRange {
+  opacity: 0.2;
+}
+
+html.dark .rdrDayInRange .rdrDayNumber span {
+  color: #e2e8f0;
+}
+
+html.dark .rdrOverlayContent {
+  background: #1e293b;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .rdrDatePickerInput {
+  background: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+html.dark .rdrDatePickerInput:hover {
+  border-color: #64748b;
+}
+
+html.dark .rdrDatePickerInput:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+}
+
+html.dark .rdrDatePickerActions {
+  border-color: #334155;
+}
+
+html.dark .rdrDatePickerTodayButton,
+html.dark .rdrDatePickerClearButton {
+  background: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+html.dark .rdrDatePickerTodayButton:hover,
+html.dark .rdrDatePickerClearButton:hover {
+  background: #334155;
+  border-color: #64748b;
+}
+
+html.dark .rdrTimePicker {
+  border-color: #334155;
+}
+
+html.dark .rdrTimePickerUp,
+html.dark .rdrTimePickerDown {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+html.dark .rdrTimePickerUp:hover,
+html.dark .rdrTimePickerDown:hover {
+  background: #334155;
+  border-color: #64748b;
+}
+
+html.dark .rdrTimePickerValue {
+  color: #e2e8f0;
+}
+
+html.dark .rdrTimePickerSeparator {
+  color: #64748b;
+}
+
+html.dark .rdrTimePickerArrow {
+  color: #94a3b8;
+}
+
+html.dark .rdrTimePickerPeriodButton {
+  background: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+html.dark .rdrTimePickerPeriodButton:hover {
+  background: #334155;
+  border-color: #64748b;
+}
+
+@media (max-width: 768px) {
+  html.dark .rdrDefinedRangesWrapper {
+    border-right: none;
+    border-bottom: 1px solid #334155;
+  }
+
+  html.dark .rdrMonth+.rdrMonth {
+    border-left: none;
+    border-top: 1px solid #334155;
+  }
+
+  html.dark .rdrOverlayContent {
+    border-radius: 16px 16px 0 0;
+  }
+}

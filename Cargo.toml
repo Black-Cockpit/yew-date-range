@@ -1,0 +1,60 @@
+# Yew Date Range — Cargo Workspace
+#
+# A date range picker component library for Yew applications,
+# inspired by react-date-range. The workspace contains the headless
+# core engine, the Yew integration layer, and demonstration examples.
+
+[workspace]
+
+# Workspace resolver version for dependency unification.
+resolver = "2"
+
+# Workspace members: core engine, UI layer, example applications, and e2e tests.
+members = [
+    "yew-date-range-core",
+    "yew-date-range",
+    "example",
+    "example-tailwind",
+    "e2e-tests",
+]
+
+# Shared package metadata inherited by all workspace members.
+[workspace.package]
+
+# Current release version.
+version = "0.1.0"
+
+# Rust edition for language and compiler features.
+edition = "2021"
+
+# Open-source license.
+license = "MIT"
+
+# Shared workspace dependencies referenced by member crates.
+[workspace.dependencies]
+
+# Internal crate references.
+yew-date-range-core = { path = "./yew-date-range-core", version = "0.1.0" }
+yew-date-range = { path = "./yew-date-range", version = "0.1.0" }
+
+# Yew framework for WebAssembly frontend development.
+yew = { version = "0.23", features = ["csr"] }
+
+# Date and time library with WASM support.
+time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+
+# JavaScript interop for WASM date access.
+js-sys = "0.3"
+
+# WebAssembly browser API bindings.
+web-sys = "0.3"
+
+# Rust-to-JavaScript interop layer for WebAssembly.
+wasm-bindgen = "0.2"
+
+# Gloo utilities for WebAssembly browser APIs.
+gloo = { version = "0.11", features = ["timers", "events"] }
+
+# Deny warnings in clippy
+[workspace.metadata]
+clippy = { deny = ["warnings"] }

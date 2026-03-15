@@ -1,0 +1,64 @@
+# Deploy Pipeline — Yew Date Range
+#
+# Automated deployment pipeline for publishing yew-date-range crates to crates.io.
+# Triggers on release events to publish both the core engine and UI library packages.
+# Publishes yew-date-range-core first since yew-date-range depends on it.
+
+name: Deploy
+
+# Triggers
+# Run on release events when published, or manual dispatch.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+# Jobs
+
+jobs:
+  publish:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-deploy-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-deploy-
+
+      - name: Build core crate
+        run: cargo build --package yew-date-range-core
+
+      - name: Build UI crate (wasm)
+        run: cargo build --package yew-date-range --target wasm32-unknown-unknown
+
+      # The core crate must be published before the UI crate since
+      # yew-date-range depends on yew-date-range-core.
+      - name: Publish yew-date-range-core to crates.io
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish --package yew-date-range-core
+
+      # Wait for crates.io index to propagate the new core version.
+      - name: Wait for crates.io index update
+        run: sleep 30
+
+      - name: Publish yew-date-range to crates.io
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish --package yew-date-range --target wasm32-unknown-unknown
