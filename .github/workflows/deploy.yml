@@ -47,55 +47,18 @@ jobs:
       - name: Build UI crate (wasm)
         run: cargo build --package yew-date-range --target wasm32-unknown-unknown
 
-      # Extract yew-date-range-core version and check if already published.
-      - name: Get yew-date-range-core version
-        id: core_version
-        run: |
-          VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "yew-date-range-core") | .version')
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Check if yew-date-range-core is already published
-        id: check_core
-        run: |
-          if cargo info yew-date-range-core@${{ steps.core_version.outputs.version }} >/dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "yew-date-range-core@${{ steps.core_version.outputs.version }} already published, skipping."
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
       # The core crate must be published before the UI crate since
       # yew-date-range depends on yew-date-range-core.
       - name: Publish yew-date-range-core to crates.io
-        if: steps.check_core.outputs.exists == 'false'
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish --package yew-date-range-core
 
       # Wait for crates.io index to propagate the new core version.
       - name: Wait for crates.io index update
-        if: steps.check_core.outputs.exists == 'false'
         run: sleep 30
 
-      # Extract yew-date-range version and check if already published.
-      - name: Get yew-date-range version
-        id: ui_version
-        run: |
-          VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "yew-date-range") | .version')
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Check if yew-date-range is already published
-        id: check_ui
-        run: |
-          if cargo info yew-date-range@${{ steps.ui_version.outputs.version }} >/dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "yew-date-range@${{ steps.ui_version.outputs.version }} already published, skipping."
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Publish yew-date-range to crates.io
-        if: steps.check_ui.outputs.exists == 'false'
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish --package yew-date-range --target wasm32-unknown-unknown
