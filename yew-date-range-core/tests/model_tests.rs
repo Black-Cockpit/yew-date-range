@@ -1,7 +1,7 @@
 //! Tests for core model types: defaults, builders, conversions, and state flags.
 
-use time::macros::date;
 use time::Weekday;
+use time::macros::date;
 
 use yew_date_range_core::models::calendar_direction::CalendarDirection;
 use yew_date_range_core::models::calendar_locale::CalendarLocale;
@@ -125,8 +125,7 @@ fn test_range_selection_default() {
 /// Validates that with_dates sets the start and end dates correctly.
 #[test]
 fn test_range_selection_with_dates() {
-    let r = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
+    let r = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
     assert_eq!(r.start_date, Some(date!(2024 - 01 - 01)));
     assert_eq!(r.end_date, Some(date!(2024 - 01 - 31)));
 }
@@ -141,14 +140,12 @@ fn test_range_selection_with_color() {
 /// Validates that normalized swaps start and end when start is after end.
 #[test]
 fn test_range_selection_normalized() {
-    let r = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 31)), Some(date!(2024 - 01 - 01)));
+    let r = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 31)), Some(date!(2024 - 01 - 01)));
     let (s, e) = r.normalized();
     assert_eq!(s, Some(date!(2024 - 01 - 01)));
     assert_eq!(e, Some(date!(2024 - 01 - 31)));
 
-    let r2 = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
+    let r2 = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
     let (s2, e2) = r2.normalized();
     assert_eq!(s2, Some(date!(2024 - 01 - 01)));
     assert_eq!(e2, Some(date!(2024 - 01 - 31)));
@@ -162,8 +159,7 @@ fn test_range_selection_normalized() {
 /// Validates that contains detects dates inside and on the boundaries of a range.
 #[test]
 fn test_range_selection_contains() {
-    let r = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 10)), Some(date!(2024 - 01 - 20)));
+    let r = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 10)), Some(date!(2024 - 01 - 20)));
     assert!(r.contains(date!(2024 - 01 - 15)));
     assert!(r.contains(date!(2024 - 01 - 10)));
     assert!(r.contains(date!(2024 - 01 - 20)));
@@ -174,8 +170,7 @@ fn test_range_selection_contains() {
 /// Validates that contains works with a start-only range matching the exact date.
 #[test]
 fn test_range_selection_contains_single_date() {
-    let r = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 15)), None);
+    let r = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 15)), None);
     assert!(r.contains(date!(2024 - 01 - 15)));
     assert!(!r.contains(date!(2024 - 01 - 16)));
 }
@@ -183,8 +178,7 @@ fn test_range_selection_contains_single_date() {
 /// Validates that contains works with an end-only range matching the exact date.
 #[test]
 fn test_range_selection_contains_end_only() {
-    let r = RangeSelection::new("s")
-        .with_dates(None, Some(date!(2024 - 01 - 15)));
+    let r = RangeSelection::new("s").with_dates(None, Some(date!(2024 - 01 - 15)));
     assert!(r.contains(date!(2024 - 01 - 15)));
     assert!(!r.contains(date!(2024 - 01 - 16)));
 }
@@ -199,12 +193,10 @@ fn test_range_selection_contains_empty() {
 /// Validates that is_complete returns true only when both start and end dates are set.
 #[test]
 fn test_range_selection_is_complete() {
-    let complete = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
+    let complete = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
     assert!(complete.is_complete());
 
-    let incomplete = RangeSelection::new("s")
-        .with_dates(Some(date!(2024 - 01 - 01)), None);
+    let incomplete = RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 01)), None);
     assert!(!incomplete.is_complete());
 
     let empty = RangeSelection::new("s").with_dates(None, None);
@@ -215,8 +207,7 @@ fn test_range_selection_is_complete() {
 #[test]
 fn test_static_range_new_and_get_range() {
     let sr = StaticRange::new("Test", || {
-        RangeSelection::new("s")
-            .with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)))
+        RangeSelection::new("s").with_dates(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)))
     });
     assert_eq!(sr.label, "Test");
     let range = sr.get_range();
@@ -227,13 +218,10 @@ fn test_static_range_new_and_get_range() {
 /// Validates that InputRange stores a label and has no is_selected function by default.
 #[test]
 fn test_input_range_new() {
-    let ir = InputRange::new("Custom", || {
-        RangeSelection::new("s").with_dates(None, None)
-    });
+    let ir = InputRange::new("Custom", || RangeSelection::new("s").with_dates(None, None));
     assert_eq!(ir.label, "Custom");
     assert!(ir.is_selected.is_none());
 }
-
 
 /// Validates that RangeChange holds the range and source correctly.
 #[test]

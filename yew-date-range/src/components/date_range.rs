@@ -125,7 +125,9 @@ pub fn date_range(props: &DateRangeProps) -> Html {
     // Initialize the shown date from props or the first range's start date.
     let shown_date = use_state(|| {
         props.shown_date.unwrap_or_else(|| {
-            props.ranges.first()
+            props
+                .ranges
+                .first()
                 .and_then(|r| r.start_date)
                 .unwrap_or_else(DateHelper::today)
         })

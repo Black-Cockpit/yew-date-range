@@ -122,25 +122,49 @@ impl Default for CalendarLocale {
     fn default() -> Self {
         Self {
             month_names: vec![
-                "January".into(), "February".into(), "March".into(),
-                "April".into(), "May".into(), "June".into(),
-                "July".into(), "August".into(), "September".into(),
-                "October".into(), "November".into(), "December".into(),
+                "January".into(),
+                "February".into(),
+                "March".into(),
+                "April".into(),
+                "May".into(),
+                "June".into(),
+                "July".into(),
+                "August".into(),
+                "September".into(),
+                "October".into(),
+                "November".into(),
+                "December".into(),
             ],
             short_month_names: vec![
-                "Jan".into(), "Feb".into(), "Mar".into(),
-                "Apr".into(), "May".into(), "Jun".into(),
-                "Jul".into(), "Aug".into(), "Sep".into(),
-                "Oct".into(), "Nov".into(), "Dec".into(),
+                "Jan".into(),
+                "Feb".into(),
+                "Mar".into(),
+                "Apr".into(),
+                "May".into(),
+                "Jun".into(),
+                "Jul".into(),
+                "Aug".into(),
+                "Sep".into(),
+                "Oct".into(),
+                "Nov".into(),
+                "Dec".into(),
             ],
             day_names: vec![
-                "Sunday".into(), "Monday".into(), "Tuesday".into(),
-                "Wednesday".into(), "Thursday".into(), "Friday".into(),
+                "Sunday".into(),
+                "Monday".into(),
+                "Tuesday".into(),
+                "Wednesday".into(),
+                "Thursday".into(),
+                "Friday".into(),
                 "Saturday".into(),
             ],
             short_day_names: vec![
-                "Su".into(), "Mo".into(), "Tu".into(),
-                "We".into(), "Th".into(), "Fr".into(),
+                "Su".into(),
+                "Mo".into(),
+                "Tu".into(),
+                "We".into(),
+                "Th".into(),
+                "Fr".into(),
                 "Sa".into(),
             ],
             start_of_week: Weekday::Sunday,
@@ -280,11 +304,7 @@ impl CalendarLocale {
         let opts = js_sys::Object::new();
 
         // Set the requested field on the options object.
-        let _ = js_sys::Reflect::set(
-            &opts,
-            &field.into(),
-            &value.into(),
-        );
+        let _ = js_sys::Reflect::set(&opts, &field.into(), &value.into());
         opts
     }
 

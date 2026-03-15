@@ -80,7 +80,9 @@ async fn test_daterangepicker_structure() -> Result<(), E> {
     assert_eq!(months.len(), 2, "should show 2 months side by side");
 
     // Verify the date display header with start/end inputs.
-    let date_display = f.query_selector(".rdrDateRangePickerWrapper .rdrDateDisplayWrapper").await?;
+    let date_display = f
+        .query_selector(".rdrDateRangePickerWrapper .rdrDateDisplayWrapper")
+        .await?;
     assert!(date_display.is_some(), "date display header missing");
 
     let date_inputs = f.query_selector_all(".rdrDateRangePickerWrapper .rdrDateInput").await?;
@@ -102,7 +104,9 @@ async fn test_daterangepicker_initial_selection_displayed() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the selection info shows the initial March 2026 dates.
-    let info = f.text_content(".example-section:nth-of-type(1) .selection-info", None).await?;
+    let info = f
+        .text_content(".example-section:nth-of-type(1) .selection-info", None)
+        .await?;
     let info_str = info.unwrap_or_default();
     assert!(
         info_str.contains("2026") && info_str.contains("03"),
@@ -110,13 +114,19 @@ async fn test_daterangepicker_initial_selection_displayed() -> Result<(), E> {
     );
 
     // Verify start/end edge and in-range classes are present.
-    let start_edges = f.query_selector_all(".rdrDateRangePickerWrapper .rdrDayStartEdge").await?;
+    let start_edges = f
+        .query_selector_all(".rdrDateRangePickerWrapper .rdrDayStartEdge")
+        .await?;
     assert!(!start_edges.is_empty(), "should highlight range start edge");
 
-    let end_edges = f.query_selector_all(".rdrDateRangePickerWrapper .rdrDayEndEdge").await?;
+    let end_edges = f
+        .query_selector_all(".rdrDateRangePickerWrapper .rdrDayEndEdge")
+        .await?;
     assert!(!end_edges.is_empty(), "should highlight range end edge");
 
-    let in_range = f.query_selector_all(".rdrDateRangePickerWrapper .rdrDayInRange").await?;
+    let in_range = f
+        .query_selector_all(".rdrDateRangePickerWrapper .rdrDayInRange")
+        .await?;
     assert!(!in_range.is_empty(), "should have in-range day cells");
 
     Ok(())
@@ -129,15 +139,22 @@ async fn test_defined_range_today_click_updates_selection() -> Result<(), E> {
     let f = page.main_frame();
 
     // Record the info before clicking.
-    let info_before = f.text_content(".example-section:nth-of-type(1) .selection-info", None).await?;
+    let info_before = f
+        .text_content(".example-section:nth-of-type(1) .selection-info", None)
+        .await?;
 
     // Click the "Today" predefined range.
     f.click_builder(".rdrStaticRange:first-child").click().await?;
     tokio::time::sleep(PAUSE).await;
 
     // Verify the info changed.
-    let info_after = f.text_content(".example-section:nth-of-type(1) .selection-info", None).await?;
-    assert_ne!(info_before, info_after, "clicking Today should update the selection info");
+    let info_after = f
+        .text_content(".example-section:nth-of-type(1) .selection-info", None)
+        .await?;
+    assert_ne!(
+        info_before, info_after,
+        "clicking Today should update the selection info"
+    );
 
     // Verify the selected class is applied.
     let selected = f.query_selector(".rdrStaticRangeSelected").await?;
@@ -158,9 +175,14 @@ async fn test_range_selection_two_click_flow() -> Result<(), E> {
     tokio::time::sleep(PAUSE).await;
 
     // Verify the info shows a partial selection.
-    let info_mid = f.text_content(".example-section:nth-of-type(1) .selection-info", None).await?;
+    let info_mid = f
+        .text_content(".example-section:nth-of-type(1) .selection-info", None)
+        .await?;
     let info_mid_str = info_mid.unwrap_or_default();
-    assert!(info_mid_str.contains("Selected"), "info should show selection in progress");
+    assert!(
+        info_mid_str.contains("Selected"),
+        "info should show selection in progress"
+    );
 
     // Click a later day to complete the range.
     let days = f.query_selector_all(day_sel).await?;
@@ -170,7 +192,9 @@ async fn test_range_selection_two_click_flow() -> Result<(), E> {
     tokio::time::sleep(PAUSE).await;
 
     // Verify the info changed after the second click.
-    let info_after = f.text_content(".example-section:nth-of-type(1) .selection-info", None).await?;
+    let info_after = f
+        .text_content(".example-section:nth-of-type(1) .selection-info", None)
+        .await?;
     assert_ne!(
         info_mid_str,
         info_after.unwrap_or_default(),
@@ -191,7 +215,9 @@ async fn test_daterange_calendar_only_renders() -> Result<(), E> {
     assert!(!wrappers.is_empty(), "should have at least one standalone DateRange");
 
     // Verify the date display header is visible.
-    let displays = f.query_selector_all(".rdrDateRangeWrapper .rdrDateDisplayWrapper").await?;
+    let displays = f
+        .query_selector_all(".rdrDateRangeWrapper .rdrDateDisplayWrapper")
+        .await?;
     assert!(!displays.is_empty(), "calendar-only example should show date display");
 
     Ok(())
@@ -260,7 +286,9 @@ async fn test_datepicker_today_button_selects_today() -> Result<(), E> {
     assert!(today_dot.is_some(), "today dot indicator should be visible");
 
     // Verify the info shows a selected date.
-    let info_after = f.text_content(".example-section:nth-of-type(4) .selection-info", None).await?;
+    let info_after = f
+        .text_content(".example-section:nth-of-type(4) .selection-info", None)
+        .await?;
     assert!(
         info_after.as_deref().unwrap_or("").contains("Selected"),
         "Today button should set a date"
@@ -280,12 +308,18 @@ async fn test_popup_range_input_and_overlay() -> Result<(), E> {
     assert!(popups.len() >= 2, "should have popup range + popup multiple pickers");
 
     // Verify the input has the correct placeholder and ARIA label.
-    let placeholder = f.get_attribute(
-        ".example-section:nth-of-type(5) .rdrDatePickerInput",
-        "placeholder",
-        None,
-    ).await?;
-    assert_eq!(placeholder.as_deref(), Some("Click to select range"), "popup range should show custom placeholder");
+    let placeholder = f
+        .get_attribute(
+            ".example-section:nth-of-type(5) .rdrDatePickerInput",
+            "placeholder",
+            None,
+        )
+        .await?;
+    assert_eq!(
+        placeholder.as_deref(),
+        Some("Click to select range"),
+        "popup range should show custom placeholder"
+    );
 
     // Verify the calendar icon is visible.
     let icon = f.query_selector(".rdrDatePickerPopup .rdrDatePickerIcon").await?;
@@ -296,7 +330,9 @@ async fn test_popup_range_input_and_overlay() -> Result<(), E> {
     assert!(overlay.is_none(), "overlay hidden before user interaction");
 
     // Click the input to open the overlay.
-    f.click_builder(".rdrDatePickerPopup .rdrDatePickerInput").click().await?;
+    f.click_builder(".rdrDatePickerPopup .rdrDatePickerInput")
+        .click()
+        .await?;
     f.wait_for_selector_builder(".rdrOverlay").wait_for_selector().await?;
 
     // Verify the overlay contains a calendar with two months.
@@ -313,11 +349,14 @@ async fn test_popup_escape_to_close() -> Result<(), E> {
     let f = page.main_frame();
 
     // Open the popup overlay.
-    f.click_builder(".rdrDatePickerPopup .rdrDatePickerInput").click().await?;
+    f.click_builder(".rdrDatePickerPopup .rdrDatePickerInput")
+        .click()
+        .await?;
     f.wait_for_selector_builder(".rdrOverlay").wait_for_selector().await?;
 
     // Press Escape via JS dispatch.
-    f.eval::<serde_json::Value>("document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}))").await?;
+    f.eval::<serde_json::Value>("document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}))")
+        .await?;
     tokio::time::sleep(PAUSE).await;
 
     // Verify the overlay is closed.
@@ -334,7 +373,9 @@ async fn test_popup_outside_click_closes() -> Result<(), E> {
     let f = page.main_frame();
 
     // Open the popup overlay.
-    f.click_builder(".rdrDatePickerPopup .rdrDatePickerInput").click().await?;
+    f.click_builder(".rdrDatePickerPopup .rdrDatePickerInput")
+        .click()
+        .await?;
     f.wait_for_selector_builder(".rdrOverlay").wait_for_selector().await?;
 
     // Click outside the overlay on the page heading.
@@ -355,11 +396,13 @@ async fn test_popup_multiple_initial_value_in_input() -> Result<(), E> {
     let f = page.main_frame();
 
     // Read the input value via JS property.
-    let val_str: String = f.evaluate_on_selector(
-        ".example-section:nth-of-type(6) .rdrDatePickerInput",
-        "el => el.value",
-        None::<()>,
-    ).await?;
+    let val_str: String = f
+        .evaluate_on_selector(
+            ".example-section:nth-of-type(6) .rdrDatePickerInput",
+            "el => el.value",
+            None::<()>,
+        )
+        .await?;
     assert!(
         val_str.contains("2026") && val_str.contains(","),
         "multiple popup input should show comma-separated dates, got: {val_str}"
@@ -375,21 +418,32 @@ async fn test_popup_multiple_toggle_date() -> Result<(), E> {
     let f = page.main_frame();
 
     // Open the multiple date popup.
-    f.click_builder(".example-section:nth-of-type(6) .rdrDatePickerInput").click().await?;
+    f.click_builder(".example-section:nth-of-type(6) .rdrDatePickerInput")
+        .click()
+        .await?;
     f.wait_for_selector_builder(".rdrOverlay").wait_for_selector().await?;
 
     // Record the selection info before clicking.
-    let info_before = f.text_content(".example-section:nth-of-type(6) .selection-info", None).await?;
+    let info_before = f
+        .text_content(".example-section:nth-of-type(6) .selection-info", None)
+        .await?;
 
     // Click a non-selected day to toggle it.
-    f.click_builder(".rdrOverlay .rdrDay:not(.rdrDayPassive):not(.rdrDayDisabled):not(.rdrDayEmpty):not(.rdrDaySelected)")
-        .click()
-        .await?;
+    f.click_builder(
+        ".rdrOverlay .rdrDay:not(.rdrDayPassive):not(.rdrDayDisabled):not(.rdrDayEmpty):not(.rdrDaySelected)",
+    )
+    .click()
+    .await?;
     tokio::time::sleep(PAUSE).await;
 
     // Verify the selection info changed.
-    let info_after = f.text_content(".example-section:nth-of-type(6) .selection-info", None).await?;
-    assert_ne!(info_before, info_after, "clicking a day should toggle it in multiple mode");
+    let info_after = f
+        .text_content(".example-section:nth-of-type(6) .selection-info", None)
+        .await?;
+    assert_ne!(
+        info_before, info_after,
+        "clicking a day should toggle it in multiple mode"
+    );
 
     Ok(())
 }
@@ -401,19 +455,27 @@ async fn test_time_picker_24h_structure() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the TimePicker is present in the 7th section.
-    let tp = f.query_selector(".example-section:nth-of-type(7) .rdrTimePicker").await?;
+    let tp = f
+        .query_selector(".example-section:nth-of-type(7) .rdrTimePicker")
+        .await?;
     assert!(tp.is_some(), "TimePicker component missing");
 
     // Verify 3 fields (hours, minutes, seconds) scoped to section 7.
-    let fields = f.query_selector_all(".example-section:nth-of-type(7) .rdrTimePickerField").await?;
+    let fields = f
+        .query_selector_all(".example-section:nth-of-type(7) .rdrTimePickerField")
+        .await?;
     assert_eq!(fields.len(), 3, "should show hour, minute, second fields");
 
     // Verify 2 separators between h:m:s scoped to section 7.
-    let seps = f.query_selector_all(".example-section:nth-of-type(7) .rdrTimePickerSeparator").await?;
+    let seps = f
+        .query_selector_all(".example-section:nth-of-type(7) .rdrTimePickerSeparator")
+        .await?;
     assert_eq!(seps.len(), 2, "2 colon separators between h:m:s");
 
     // Verify no AM/PM toggle in 24h mode scoped to section 7.
-    let period = f.query_selector(".example-section:nth-of-type(7) .rdrTimePickerPeriodButton").await?;
+    let period = f
+        .query_selector(".example-section:nth-of-type(7) .rdrTimePickerPeriodButton")
+        .await?;
     assert!(period.is_none(), "24h mode should not show AM/PM toggle");
 
     Ok(())
@@ -426,16 +488,25 @@ async fn test_time_picker_increment_hour() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the initial time is 14:30.
-    let info_before = f.text_content(".example-section:nth-of-type(7) .selection-info", None).await?;
+    let info_before = f
+        .text_content(".example-section:nth-of-type(7) .selection-info", None)
+        .await?;
     let before_str = info_before.unwrap_or_default();
-    assert!(before_str.contains("14:30"), "initial time should be 14:30, got: {before_str}");
+    assert!(
+        before_str.contains("14:30"),
+        "initial time should be 14:30, got: {before_str}"
+    );
 
     // Click the hour up button.
-    f.click_builder(".example-section:nth-of-type(7) .rdrTimePickerUp").click().await?;
+    f.click_builder(".example-section:nth-of-type(7) .rdrTimePickerUp")
+        .click()
+        .await?;
     tokio::time::sleep(PAUSE).await;
 
     // Verify the hour incremented to 15.
-    let info_after = f.text_content(".example-section:nth-of-type(7) .selection-info", None).await?;
+    let info_after = f
+        .text_content(".example-section:nth-of-type(7) .selection-info", None)
+        .await?;
     let after_str = info_after.unwrap_or_default();
     assert!(
         after_str.contains("15:30"),
@@ -452,14 +523,18 @@ async fn test_constrained_range_renders() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the 8th section has a DateRange component.
-    let section_info = f.text_content(".example-section:nth-of-type(8) .selection-info", None).await?;
+    let section_info = f
+        .text_content(".example-section:nth-of-type(8) .selection-info", None)
+        .await?;
     assert!(
         section_info.is_some(),
         "constrained range section should have selection info"
     );
 
     // Verify there are disabled days in the constrained range (disabled_ranges spans Mar 14-16).
-    let disabled = f.query_selector_all(".example-section:nth-of-type(8) .rdrDayDisabled").await?;
+    let disabled = f
+        .query_selector_all(".example-section:nth-of-type(8) .rdrDayDisabled")
+        .await?;
     assert!(
         !disabled.is_empty(),
         "constrained range should have disabled days from min_date, max_date, or disabled_ranges"
@@ -475,11 +550,15 @@ async fn test_time_picker_12h_ampm_toggle() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the 9th section has a time picker with an AM/PM period button.
-    let period_btn = f.query_selector(".example-section:nth-of-type(9) .rdrTimePickerPeriodButton").await?;
+    let period_btn = f
+        .query_selector(".example-section:nth-of-type(9) .rdrTimePickerPeriodButton")
+        .await?;
     assert!(period_btn.is_some(), "12h time picker should have AM/PM toggle button");
 
     // Verify the initial time info contains AM (9:15:30 AM).
-    let info = f.text_content(".example-section:nth-of-type(9) .selection-info", None).await?;
+    let info = f
+        .text_content(".example-section:nth-of-type(9) .selection-info", None)
+        .await?;
     let info_str = info.unwrap_or_default();
     assert!(
         info_str.contains("AM") || info_str.contains("PM"),
@@ -496,11 +575,18 @@ async fn test_disabled_state_renders() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the 10th section has an inline picker.
-    let disabled_picker = f.query_selector(".example-section:nth-of-type(10) .rdrDatePickerInline").await?;
-    assert!(disabled_picker.is_some(), "disabled state section should have an inline picker");
+    let disabled_picker = f
+        .query_selector(".example-section:nth-of-type(10) .rdrDatePickerInline")
+        .await?;
+    assert!(
+        disabled_picker.is_some(),
+        "disabled state section should have an inline picker"
+    );
 
     // Verify the info mentions read-only.
-    let info = f.text_content(".example-section:nth-of-type(10) .selection-info", None).await?;
+    let info = f
+        .text_content(".example-section:nth-of-type(10) .selection-info", None)
+        .await?;
     let info_str = info.unwrap_or_default();
     assert!(
         info_str.contains("read-only"),
@@ -542,7 +628,9 @@ async fn test_month_picker_drilldown_and_select() -> Result<(), E> {
 
     // Click the month title to open the month grid.
     f.click_builder(".rdrMonthPickerTitle").click().await?;
-    f.wait_for_selector_builder(".rdrMonthPickerGrid").wait_for_selector().await?;
+    f.wait_for_selector_builder(".rdrMonthPickerGrid")
+        .wait_for_selector()
+        .await?;
 
     // Verify 12 month cells with one selected.
     let cells = f.query_selector_all(".rdrMonthPickerCell").await?;
@@ -569,7 +657,9 @@ async fn test_year_picker_drilldown_and_select() -> Result<(), E> {
 
     // Click the year title to open the year grid.
     f.click_builder(".rdrYearPickerTitle").click().await?;
-    f.wait_for_selector_builder(".rdrYearPickerGrid").wait_for_selector().await?;
+    f.wait_for_selector_builder(".rdrYearPickerGrid")
+        .wait_for_selector()
+        .await?;
 
     // Verify 10 year cells with one selected.
     let cells = f.query_selector_all(".rdrYearPickerCell").await?;
@@ -619,11 +709,9 @@ async fn test_day_cells_have_aria_labels() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify day buttons have aria-label.
-    let aria = f.get_attribute(
-        ".rdrDay:not(.rdrDayEmpty):not(.rdrDayPassive)",
-        "aria-label",
-        None,
-    ).await?;
+    let aria = f
+        .get_attribute(".rdrDay:not(.rdrDayEmpty):not(.rdrDayPassive)", "aria-label", None)
+        .await?;
     assert!(
         aria.is_some() && !aria.as_deref().unwrap_or("").is_empty(),
         "day cells should have aria-label with date"
@@ -664,9 +752,9 @@ async fn test_default_css_auto_injected() -> Result<(), E> {
     let f = page.main_frame();
 
     // Verify the calendar wrapper has a non-transparent background from auto-injected CSS.
-    let bg = f.eval::<String>(
-        "window.getComputedStyle(document.querySelector('.rdrCalendarWrapper')).backgroundColor"
-    ).await?;
+    let bg = f
+        .eval::<String>("window.getComputedStyle(document.querySelector('.rdrCalendarWrapper')).backgroundColor")
+        .await?;
     assert!(
         !bg.is_empty() && bg != "rgba(0, 0, 0, 0)",
         "auto-injected CSS should apply background to calendar"

@@ -43,10 +43,7 @@ fn test_range_reversed_contains() {
 /// Validates that a multiple-date selection contains only the specific listed dates.
 #[test]
 fn test_multiple_contains() {
-    let v = SelectionValue::Multiple(vec![
-        date!(2024 - 01 - 05),
-        date!(2024 - 01 - 15),
-    ]);
+    let v = SelectionValue::Multiple(vec![date!(2024 - 01 - 05), date!(2024 - 01 - 15)]);
     assert!(v.contains(date!(2024 - 01 - 05)));
     assert!(v.contains(date!(2024 - 01 - 15)));
     assert!(!v.contains(date!(2024 - 01 - 10)));
@@ -62,10 +59,13 @@ fn test_is_empty() {
 
     // Non-empty variants.
     assert!(!SelectionValue::Single(Some(date!(2024 - 01 - 01))).is_empty());
-    assert!(!SelectionValue::Range {
-        start: Some(date!(2024 - 01 - 01)),
-        end: None,
-    }.is_empty());
+    assert!(
+        !SelectionValue::Range {
+            start: Some(date!(2024 - 01 - 01)),
+            end: None,
+        }
+        .is_empty()
+    );
     assert!(!SelectionValue::Multiple(vec![date!(2024 - 01 - 01)]).is_empty());
 }
 

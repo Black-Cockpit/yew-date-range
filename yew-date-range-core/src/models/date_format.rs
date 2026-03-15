@@ -83,10 +83,7 @@ impl DateFormat {
         let pattern = &self.pattern;
 
         // Determine the separator character from the pattern.
-        let sep = pattern
-            .chars()
-            .find(|c| !c.is_alphanumeric())
-            .unwrap_or('-');
+        let sep = pattern.chars().find(|c| !c.is_alphanumeric()).unwrap_or('-');
 
         // Split both the pattern and input by the separator.
         let pattern_parts: Vec<&str> = pattern.split(sep).collect();

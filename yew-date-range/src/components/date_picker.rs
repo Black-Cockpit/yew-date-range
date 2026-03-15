@@ -183,13 +183,11 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
 
     // Initialize the shown date from props or the first selected date.
     let shown_date = use_state(|| {
-        props.shown_date.unwrap_or_else(|| {
-            match &props.value {
-                SelectionValue::Single(Some(d)) => *d,
-                SelectionValue::Range { start: Some(s), .. } => *s,
-                SelectionValue::Multiple(dates) if !dates.is_empty() => dates[0],
-                _ => DateHelper::today(),
-            }
+        props.shown_date.unwrap_or_else(|| match &props.value {
+            SelectionValue::Single(Some(d)) => *d,
+            SelectionValue::Range { start: Some(s), .. } => *s,
+            SelectionValue::Multiple(dates) if !dates.is_empty() => dates[0],
+            _ => DateHelper::today(),
         })
     });
 
@@ -211,11 +209,10 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         SelectionValue::Range { start, end } => {
             vec![RangeSelection::new("selection").with_dates(*start, *end)]
         }
-        SelectionValue::Multiple(dates) => {
-            dates.iter().map(|d| {
-                RangeSelection::new("selection").with_dates(Some(*d), Some(*d))
-            }).collect()
-        }
+        SelectionValue::Multiple(dates) => dates
+            .iter()
+            .map(|d| RangeSelection::new("selection").with_dates(Some(*d), Some(*d)))
+            .collect(),
     };
 
     // Compute the hover preview range only during active mid-selection.
@@ -435,15 +432,10 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         let on_change = props.on_change.clone();
         let mode = props.selection_mode;
 
-        Callback::from(move |_: MouseEvent| {
-            match mode {
-                SelectionMode::Single => on_change.emit(SelectionValue::Single(None)),
-                SelectionMode::Range => on_change.emit(SelectionValue::Range {
-                    start: None,
-                    end: None,
-                }),
-                SelectionMode::Multiple => on_change.emit(SelectionValue::Multiple(Vec::new())),
-            }
+        Callback::from(move |_: MouseEvent| match mode {
+            SelectionMode::Single => on_change.emit(SelectionValue::Single(None)),
+            SelectionMode::Range => on_change.emit(SelectionValue::Range { start: None, end: None }),
+            SelectionMode::Multiple => on_change.emit(SelectionValue::Multiple(Vec::new())),
         })
     };
 
@@ -521,14 +513,11 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
             }
         }
         DisplayMode::Popup => {
-            let placeholder = props
-                .placeholder
-                .clone()
-                .unwrap_or_else(|| match props.selection_mode {
-                    SelectionMode::Single => locale.select_date_placeholder.clone(),
-                    SelectionMode::Range => locale.select_range_placeholder.clone(),
-                    SelectionMode::Multiple => locale.select_dates_placeholder.clone(),
-                });
+            let placeholder = props.placeholder.clone().unwrap_or_else(|| match props.selection_mode {
+                SelectionMode::Single => locale.select_date_placeholder.clone(),
+                SelectionMode::Range => locale.select_range_placeholder.clone(),
+                SelectionMode::Multiple => locale.select_dates_placeholder.clone(),
+            });
 
             html! {
                 <div class={classes!("rdrDatePicker", "rdrDatePickerPopup", disabled_class, extra_class)}>
@@ -567,4 +556,3 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         }
     }
 }
-

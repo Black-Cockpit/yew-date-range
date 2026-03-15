@@ -1,5 +1,5 @@
-use time::macros::date;
 use time::Weekday;
+use time::macros::date;
 use yew::prelude::*;
 use yew_date_range::prelude::*;
 
@@ -186,10 +186,7 @@ fn app() -> Html {
 
     // Configure the full DateRangePicker with predefined sidebar ranges.
     let ranges1 = use_state(|| {
-        vec![RangeSelection::new("selection").with_dates(
-            Some(date!(2026 - 03 - 10)),
-            Some(date!(2026 - 03 - 20)),
-        )]
+        vec![RangeSelection::new("selection").with_dates(Some(date!(2026 - 03 - 10)), Some(date!(2026 - 03 - 20)))]
     });
     let on_change1 = {
         let ranges1 = ranges1.clone();
@@ -201,9 +198,11 @@ fn app() -> Html {
 
     // Configure the DateRange calendar-only component with a green accent.
     let ranges2 = use_state(|| {
-        vec![RangeSelection::new("selection")
-            .with_color("#00b894")
-            .with_dates(None, None)]
+        vec![
+            RangeSelection::new("selection")
+                .with_color("#00b894")
+                .with_dates(None, None),
+        ]
     });
     let on_change2 = {
         let ranges2 = ranges2.clone();
@@ -215,9 +214,11 @@ fn app() -> Html {
 
     // Configure a single month vertical layout with week numbers.
     let ranges3 = use_state(|| {
-        vec![RangeSelection::new("selection")
-            .with_color("#6c5ce7")
-            .with_dates(None, None)]
+        vec![
+            RangeSelection::new("selection")
+                .with_color("#6c5ce7")
+                .with_dates(None, None),
+        ]
     });
     let on_change3 = {
         let ranges3 = ranges3.clone();
@@ -248,11 +249,13 @@ fn app() -> Html {
     let popup_range_info = format_selection_info(&popup_range, &t);
 
     // Configure the popup multiple-date DatePicker.
-    let multi_value = use_state(|| SelectionValue::Multiple(vec![
-        date!(2026 - 03 - 05),
-        date!(2026 - 03 - 12),
-        date!(2026 - 03 - 19),
-    ]));
+    let multi_value = use_state(|| {
+        SelectionValue::Multiple(vec![
+            date!(2026 - 03 - 05),
+            date!(2026 - 03 - 12),
+            date!(2026 - 03 - 19),
+        ])
+    });
     let on_multi_change = {
         let multi_value = multi_value.clone();
         Callback::from(move |val: SelectionValue| {
@@ -284,9 +287,11 @@ fn app() -> Html {
 
     // Configure the DateRange with min/max date constraints and span limits.
     let constrained_ranges = use_state(|| {
-        vec![RangeSelection::new("selection")
-            .with_color("#e17055")
-            .with_dates(None, None)]
+        vec![
+            RangeSelection::new("selection")
+                .with_color("#e17055")
+                .with_dates(None, None),
+        ]
     });
     let on_constrained_change = {
         let constrained_ranges = constrained_ranges.clone();
@@ -612,7 +617,13 @@ fn format_selection_info(value: &SelectionValue, t: &PageText) -> String {
             if dates.is_empty() {
                 t.no_dates.into()
             } else {
-                format!("{} {} {}: {}", t.selected, dates.len(), t.dates_label, fmt.format_multiple(dates, ", "))
+                format!(
+                    "{} {} {}: {}",
+                    t.selected,
+                    dates.len(),
+                    t.dates_label,
+                    fmt.format_multiple(dates, ", ")
+                )
             }
         }
     }

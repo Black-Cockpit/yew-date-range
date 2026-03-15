@@ -52,10 +52,7 @@ fn test_parse_invalid() {
 #[test]
 fn test_format_range() {
     let fmt = DateFormat::new("yyyy-MM-dd");
-    let result = fmt.format_range(
-        Some(date!(2024 - 01 - 01)),
-        Some(date!(2024 - 01 - 31)),
-    );
+    let result = fmt.format_range(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 31)));
     assert_eq!(result, "2024-01-01 - 2024-01-31");
 }
 

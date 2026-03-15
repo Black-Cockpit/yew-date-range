@@ -7,10 +7,10 @@
 use actix_cors::Cors;
 use actix_files::Files;
 use actix_web::{App, HttpServer};
+use playwright::Playwright;
 use playwright::api::browser::Browser;
 use playwright::api::browser_context::BrowserContext;
 use playwright::api::page::Page;
-use playwright::Playwright;
 use std::net::TcpListener;
 use std::path::PathBuf;
 use tokio::sync::OnceCell;
@@ -63,7 +63,10 @@ fn available_port() -> Result<u16, std::io::Error> {
 fn dist_path(relative: &str) -> PathBuf {
     // Navigate from the crate manifest directory up to the workspace root.
     let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    manifest.parent().map(|p| p.join(relative)).unwrap_or_else(|| manifest.join(relative))
+    manifest
+        .parent()
+        .map(|p| p.join(relative))
+        .unwrap_or_else(|| manifest.join(relative))
 }
 
 /// Creates the shared fixture with one Actix server and one Playwright browser.
@@ -91,11 +94,7 @@ pub async fn create_fixture(dist_relative: &str) -> Result<SharedFixture, Box<dy
     let server = HttpServer::new(move || {
         App::new()
             .wrap(Cors::permissive())
-            .service(
-                Files::new("/", &dist_str)
-                    .index_file("index.html")
-                    .prefer_utf8(true),
-            )
+            .service(Files::new("/", &dist_str).index_file("index.html").prefer_utf8(true))
     })
     .bind(("127.0.0.1", port))?
     .disable_signals()
@@ -164,9 +163,7 @@ pub async fn new_page(
     dist_relative: &str,
 ) -> Result<Page, Box<dyn std::error::Error + Send + Sync>> {
     // Initialize the fixture lazily on first access.
-    let fixture = cell
-        .get_or_try_init(|| create_fixture(dist_relative))
-        .await?;
+    let fixture = cell.get_or_try_init(|| create_fixture(dist_relative)).await?;
 
     // Open a new browser page.
     let page = fixture.context.new_page().await?;

@@ -126,9 +126,7 @@ pub fn calendar(props: &CalendarProps) -> Html {
     let t = DateHelper::today();
 
     // Initialize the internal shown date state when not externally controlled.
-    let internal_shown_date = use_state(|| {
-        props.shown_date.unwrap_or(t)
-    });
+    let internal_shown_date = use_state(|| props.shown_date.unwrap_or(t));
 
     // Sync internal state when the shown_date prop changes from the parent.
     {
@@ -180,17 +178,15 @@ pub fn calendar(props: &CalendarProps) -> Html {
         let view = view.clone();
         let on_nav = on_nav.clone();
         let update_shown_date = update_shown_date.clone();
-        Callback::from(move |_: MouseEvent| {
-            match *view {
-                CalendarView::Days => on_nav.emit(NavigationAction::PrevMonth),
-                CalendarView::Months => {
-                    let new_date = DateHelper::sub_months(shown_date, 12);
-                    update_shown_date(new_date);
-                }
-                CalendarView::Years => {
-                    let new_date = DateHelper::sub_months(shown_date, 120);
-                    update_shown_date(new_date);
-                }
+        Callback::from(move |_: MouseEvent| match *view {
+            CalendarView::Days => on_nav.emit(NavigationAction::PrevMonth),
+            CalendarView::Months => {
+                let new_date = DateHelper::sub_months(shown_date, 12);
+                update_shown_date(new_date);
+            }
+            CalendarView::Years => {
+                let new_date = DateHelper::sub_months(shown_date, 120);
+                update_shown_date(new_date);
             }
         })
     };
@@ -200,17 +196,15 @@ pub fn calendar(props: &CalendarProps) -> Html {
         let view = view.clone();
         let on_nav = on_nav.clone();
         let update_shown_date = update_shown_date.clone();
-        Callback::from(move |_: MouseEvent| {
-            match *view {
-                CalendarView::Days => on_nav.emit(NavigationAction::NextMonth),
-                CalendarView::Months => {
-                    let new_date = DateHelper::add_months(shown_date, 12);
-                    update_shown_date(new_date);
-                }
-                CalendarView::Years => {
-                    let new_date = DateHelper::add_months(shown_date, 120);
-                    update_shown_date(new_date);
-                }
+        Callback::from(move |_: MouseEvent| match *view {
+            CalendarView::Days => on_nav.emit(NavigationAction::NextMonth),
+            CalendarView::Months => {
+                let new_date = DateHelper::add_months(shown_date, 12);
+                update_shown_date(new_date);
+            }
+            CalendarView::Years => {
+                let new_date = DateHelper::add_months(shown_date, 120);
+                update_shown_date(new_date);
             }
         })
     };
@@ -451,4 +445,3 @@ pub fn calendar(props: &CalendarProps) -> Html {
         </div>
     }
 }
-

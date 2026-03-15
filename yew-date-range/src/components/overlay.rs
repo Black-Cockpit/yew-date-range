@@ -1,5 +1,5 @@
-use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
+use wasm_bindgen::prelude::*;
 use web_sys::Element;
 use yew::prelude::*;
 
@@ -70,10 +70,7 @@ pub fn overlay(props: &OverlayProps) -> Html {
                 });
 
                 if let Some(win) = web_sys::window() {
-                    let _ = win.add_event_listener_with_callback(
-                        "mousedown",
-                        closure.as_ref().unchecked_ref(),
-                    );
+                    let _ = win.add_event_listener_with_callback("mousedown", closure.as_ref().unchecked_ref());
                 }
 
                 stored_closure = Some(closure);
@@ -82,10 +79,7 @@ pub fn overlay(props: &OverlayProps) -> Html {
             move || {
                 if let Some(closure) = stored_closure.take() {
                     if let Some(win) = web_sys::window() {
-                        let _ = win.remove_event_listener_with_callback(
-                            "mousedown",
-                            closure.as_ref().unchecked_ref(),
-                        );
+                        let _ = win.remove_event_listener_with_callback("mousedown", closure.as_ref().unchecked_ref());
                     }
                 }
             }
@@ -110,10 +104,7 @@ pub fn overlay(props: &OverlayProps) -> Html {
                 });
 
                 if let Some(win) = web_sys::window() {
-                    let _ = win.add_event_listener_with_callback(
-                        "keydown",
-                        closure.as_ref().unchecked_ref(),
-                    );
+                    let _ = win.add_event_listener_with_callback("keydown", closure.as_ref().unchecked_ref());
                 }
 
                 stored_closure = Some(closure);
@@ -122,10 +113,7 @@ pub fn overlay(props: &OverlayProps) -> Html {
             move || {
                 if let Some(closure) = stored_closure.take() {
                     if let Some(win) = web_sys::window() {
-                        let _ = win.remove_event_listener_with_callback(
-                            "keydown",
-                            closure.as_ref().unchecked_ref(),
-                        );
+                        let _ = win.remove_event_listener_with_callback("keydown", closure.as_ref().unchecked_ref());
                     }
                 }
             }

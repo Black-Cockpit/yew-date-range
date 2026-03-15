@@ -57,11 +57,7 @@ impl TimeSelection {
     /// - `TimePeriod::AM` for hours 0-11, `TimePeriod::PM` for 12-23.
     pub fn period(&self) -> TimePeriod {
         // Determine the period based on the 24h hour value.
-        if self.hour < 12 {
-            TimePeriod::AM
-        } else {
-            TimePeriod::PM
-        }
+        if self.hour < 12 { TimePeriod::AM } else { TimePeriod::PM }
     }
 
     /// Creates a time selection from 12-hour format values.
@@ -127,12 +123,7 @@ impl TimeSelection {
     ///
     /// - A formatted string like "02:30 PM".
     pub fn format_12h_short(&self) -> String {
-        format!(
-            "{:02}:{:02} {}",
-            self.hour_12(),
-            self.minute,
-            self.period()
-        )
+        format!("{:02}:{:02} {}", self.hour_12(), self.minute, self.period())
     }
 
     /// Increments the hour, wrapping from 23 to 0.

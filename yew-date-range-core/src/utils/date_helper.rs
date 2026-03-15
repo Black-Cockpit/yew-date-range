@@ -294,11 +294,7 @@ impl DateHelper {
     /// - `true` if the date is within the inclusive range.
     pub fn is_between(date: Date, start: Date, end: Date) -> bool {
         // Normalize the range so start <= end.
-        let (s, e) = if start <= end {
-            (start, end)
-        } else {
-            (end, start)
-        };
+        let (s, e) = if start <= end { (start, end) } else { (end, start) };
         date >= s && date <= e
     }
 
@@ -354,14 +350,9 @@ impl DateHelper {
             }
 
             // Extract the week number from the first valid day.
-            let wn = days
-                .iter()
-                .find_map(|d| d.map(Self::week_number));
+            let wn = days.iter().find_map(|d| d.map(Self::week_number));
 
-            weeks.push(WeekData {
-                week_number: wn,
-                days,
-            });
+            weeks.push(WeekData { week_number: wn, days });
 
             // Stop after covering the last day and completing the week.
             if current > last && current.weekday() == week_start {
@@ -369,11 +360,7 @@ impl DateHelper {
             }
         }
 
-        MonthData {
-            year,
-            month,
-            weeks,
-        }
+        MonthData { year, month, weeks }
     }
 
     /// Converts a zero-indexed month number to a Month enum.
@@ -440,12 +427,7 @@ impl DateHelper {
     ///
     /// - A formatted date string.
     pub fn format_date(date: Date) -> String {
-        format!(
-            "{:04}-{:02}-{:02}",
-            date.year(),
-            date.month() as u8,
-            date.day()
-        )
+        format!("{:04}-{:02}-{:02}", date.year(), date.month() as u8, date.day())
     }
 
     /// Parses a date from a YYYY-MM-DD string.

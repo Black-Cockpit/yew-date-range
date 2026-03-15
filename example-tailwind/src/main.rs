@@ -1,5 +1,5 @@
-use time::macros::date;
 use time::Weekday;
+use time::macros::date;
 use yew::prelude::*;
 use yew_date_range::prelude::*;
 
@@ -178,33 +178,49 @@ fn app() -> Html {
 
     // 1. DateRangePicker with sidebar.
     let ranges1 = use_state(|| {
-        vec![RangeSelection::new("selection")
-            .with_dates(Some(date!(2026 - 03 - 10)), Some(date!(2026 - 03 - 20)))
-            .with_color("#3b82f6")]
+        vec![
+            RangeSelection::new("selection")
+                .with_dates(Some(date!(2026 - 03 - 10)), Some(date!(2026 - 03 - 20)))
+                .with_color("#3b82f6"),
+        ]
     });
     let on_change1 = {
         let ranges1 = ranges1.clone();
-        Callback::from(move |change: RangeChange| { ranges1.set(vec![change.range]); })
+        Callback::from(move |change: RangeChange| {
+            ranges1.set(vec![change.range]);
+        })
     };
     let r1 = ranges1.first().cloned().unwrap_or_default();
 
     // 2. DateRange calendar-only with green accent.
     let ranges2 = use_state(|| {
-        vec![RangeSelection::new("selection").with_color("#10b981").with_dates(None, None)]
+        vec![
+            RangeSelection::new("selection")
+                .with_color("#10b981")
+                .with_dates(None, None),
+        ]
     });
     let on_change2 = {
         let ranges2 = ranges2.clone();
-        Callback::from(move |change: RangeChange| { ranges2.set(vec![change.range]); })
+        Callback::from(move |change: RangeChange| {
+            ranges2.set(vec![change.range]);
+        })
     };
     let r2 = ranges2.first().cloned().unwrap_or_default();
 
     // 3. Single month vertical with week numbers.
     let ranges3 = use_state(|| {
-        vec![RangeSelection::new("selection").with_color("#8b5cf6").with_dates(None, None)]
+        vec![
+            RangeSelection::new("selection")
+                .with_color("#8b5cf6")
+                .with_dates(None, None),
+        ]
     });
     let on_change3 = {
         let ranges3 = ranges3.clone();
-        Callback::from(move |change: RangeChange| { ranges3.set(vec![change.range]); })
+        Callback::from(move |change: RangeChange| {
+            ranges3.set(vec![change.range]);
+        })
     };
     let r3 = ranges3.first().cloned().unwrap_or_default();
 
@@ -212,23 +228,33 @@ fn app() -> Html {
     let single_value = use_state(|| SelectionValue::Single(Some(date!(2026 - 03 - 15))));
     let on_single_change = {
         let single_value = single_value.clone();
-        Callback::from(move |val: SelectionValue| { single_value.set(val); })
+        Callback::from(move |val: SelectionValue| {
+            single_value.set(val);
+        })
     };
 
     // 5. Popup range picker with dd/MM/yyyy format.
     let popup_range = use_state(|| SelectionValue::Range { start: None, end: None });
     let on_popup_range_change = {
         let popup_range = popup_range.clone();
-        Callback::from(move |val: SelectionValue| { popup_range.set(val); })
+        Callback::from(move |val: SelectionValue| {
+            popup_range.set(val);
+        })
     };
 
     // 6. Popup multiple-date picker.
-    let multi_value = use_state(|| SelectionValue::Multiple(vec![
-        date!(2026 - 03 - 05), date!(2026 - 03 - 12), date!(2026 - 03 - 22),
-    ]));
+    let multi_value = use_state(|| {
+        SelectionValue::Multiple(vec![
+            date!(2026 - 03 - 05),
+            date!(2026 - 03 - 12),
+            date!(2026 - 03 - 22),
+        ])
+    });
     let on_multi_change = {
         let multi_value = multi_value.clone();
-        Callback::from(move |val: SelectionValue| { multi_value.set(val); })
+        Callback::from(move |val: SelectionValue| {
+            multi_value.set(val);
+        })
     };
 
     // 7. Inline date + 24h time picker.
@@ -236,20 +262,30 @@ fn app() -> Html {
     let time_value = use_state(|| TimeSelection::new(14, 30, 0));
     let on_time_date = {
         let time_date = time_date.clone();
-        Callback::from(move |val: SelectionValue| { time_date.set(val); })
+        Callback::from(move |val: SelectionValue| {
+            time_date.set(val);
+        })
     };
     let on_time = {
         let time_value = time_value.clone();
-        Callback::from(move |t: TimeSelection| { time_value.set(t); })
+        Callback::from(move |t: TimeSelection| {
+            time_value.set(t);
+        })
     };
 
     // 8. Constrained range with min/max dates and span limits.
     let constrained = use_state(|| {
-        vec![RangeSelection::new("selection").with_color("#f97316").with_dates(None, None)]
+        vec![
+            RangeSelection::new("selection")
+                .with_color("#f97316")
+                .with_dates(None, None),
+        ]
     });
     let on_constrained = {
         let constrained = constrained.clone();
-        Callback::from(move |change: RangeChange| { constrained.set(vec![change.range]); })
+        Callback::from(move |change: RangeChange| {
+            constrained.set(vec![change.range]);
+        })
     };
     let rc = constrained.first().cloned().unwrap_or_default();
 
@@ -258,11 +294,15 @@ fn app() -> Html {
     let time12_value = use_state(|| TimeSelection::new(9, 15, 30));
     let on_time12_date = {
         let time12_date = time12_date.clone();
-        Callback::from(move |val: SelectionValue| { time12_date.set(val); })
+        Callback::from(move |val: SelectionValue| {
+            time12_date.set(val);
+        })
     };
     let on_time12 = {
         let time12_value = time12_value.clone();
-        Callback::from(move |t: TimeSelection| { time12_value.set(t); })
+        Callback::from(move |t: TimeSelection| {
+            time12_value.set(t);
+        })
     };
 
     // 10. Disabled / read-only state.
@@ -274,22 +314,41 @@ fn app() -> Html {
     let toggle_icon = if is_dark { "*" } else { "o" };
 
     // Reusable Tailwind class helpers.
-    let heading = |dark: bool| classes!(
-        "text-lg", "font-semibold", "mb-2", "pb-2", "border-b",
-        if dark { "border-slate-700" } else { "border-gray-200" }
-    );
-    let card = |dark: bool| classes!(
-        "flex", "justify-center", "p-6", "rounded-xl",
-        if dark { "bg-slate-800" } else { "bg-white shadow-sm" }
-    );
-    let info = |dark: bool| classes!(
-        "mt-3", "px-4", "py-3", "rounded-lg", "text-sm", "text-center",
-        if dark { "bg-slate-800 text-slate-400" } else { "bg-gray-100 text-gray-500" }
-    );
-    let desc = |dark: bool| classes!(
-        "text-xs", "mb-4",
-        if dark { "text-slate-500" } else { "text-gray-400" }
-    );
+    let heading = |dark: bool| {
+        classes!(
+            "text-lg",
+            "font-semibold",
+            "mb-2",
+            "pb-2",
+            "border-b",
+            if dark { "border-slate-700" } else { "border-gray-200" }
+        )
+    };
+    let card = |dark: bool| {
+        classes!(
+            "flex",
+            "justify-center",
+            "p-6",
+            "rounded-xl",
+            if dark { "bg-slate-800" } else { "bg-white shadow-sm" }
+        )
+    };
+    let info = |dark: bool| {
+        classes!(
+            "mt-3",
+            "px-4",
+            "py-3",
+            "rounded-lg",
+            "text-sm",
+            "text-center",
+            if dark {
+                "bg-slate-800 text-slate-400"
+            } else {
+                "bg-gray-100 text-gray-500"
+            }
+        )
+    };
+    let desc = |dark: bool| classes!("text-xs", "mb-4", if dark { "text-slate-500" } else { "text-gray-400" });
     let accent = if is_dark { "text-blue-400" } else { "text-blue-600" };
 
     html! {

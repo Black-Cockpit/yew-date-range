@@ -110,7 +110,15 @@ impl RangeHelper {
         disabled_fn: Option<&dyn Fn(Date) -> bool>,
     ) -> bool {
         // Delegate to the full version with an empty range list.
-        Self::is_date_disabled_full(date, min_date, max_date, disabled_dates, disabled_weekdays, &[], disabled_fn)
+        Self::is_date_disabled_full(
+            date,
+            min_date,
+            max_date,
+            disabled_dates,
+            disabled_weekdays,
+            &[],
+            disabled_fn,
+        )
     }
 
     /// Full disabled check with all constraint types.
@@ -195,12 +203,7 @@ impl RangeHelper {
     /// # Returns
     ///
     /// - `true` if the span is within the constraints.
-    pub fn is_span_valid(
-        start: Date,
-        end: Date,
-        min_span: Option<i64>,
-        max_span: Option<i64>,
-    ) -> bool {
+    pub fn is_span_valid(start: Date, end: Date, min_span: Option<i64>, max_span: Option<i64>) -> bool {
         // Calculate the absolute number of days in the span.
         let days = DateHelper::diff_days(end, start).abs() + 1;
 
@@ -292,11 +295,7 @@ impl RangeHelper {
         if range_focus_start {
             // Focusing on start date: preview from hover to current end.
             if let Some(end) = range.end_date {
-                let (s, e) = if hover <= end {
-                    (hover, end)
-                } else {
-                    (end, hover)
-                };
+                let (s, e) = if hover <= end { (hover, end) } else { (end, hover) };
                 return Some((s, e));
             }
             return Some((hover, hover));
@@ -304,11 +303,7 @@ impl RangeHelper {
 
         // Focusing on end date: preview from current start to hover.
         if let Some(start) = range.start_date {
-            let (s, e) = if hover >= start {
-                (start, hover)
-            } else {
-                (hover, start)
-            };
+            let (s, e) = if hover >= start { (start, hover) } else { (hover, start) };
             return Some((s, e));
         }
 

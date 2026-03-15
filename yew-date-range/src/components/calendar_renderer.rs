@@ -279,12 +279,10 @@ impl CalendarRenderer {
         state.is_weekend = DateHelper::is_weekend(date);
 
         // Build a custom disabled function from the callback if provided.
-        let custom_disabled_fn: Option<Box<dyn Fn(Date) -> bool>> = is_date_disabled_cb
-            .as_ref()
-            .map(|cb| {
-                let cb = cb.clone();
-                Box::new(move |d: Date| cb.emit(d)) as Box<dyn Fn(Date) -> bool>
-            });
+        let custom_disabled_fn: Option<Box<dyn Fn(Date) -> bool>> = is_date_disabled_cb.as_ref().map(|cb| {
+            let cb = cb.clone();
+            Box::new(move |d: Date| cb.emit(d)) as Box<dyn Fn(Date) -> bool>
+        });
 
         // Check all disabled constraints.
         state.is_disabled = RangeHelper::is_date_disabled_full(

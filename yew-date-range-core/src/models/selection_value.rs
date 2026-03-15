@@ -123,8 +123,12 @@ impl SelectionValue {
             SelectionValue::Range { start, end } => {
                 // Collect whichever boundary dates are present.
                 let mut v = Vec::new();
-                if let Some(s) = start { v.push(*s); }
-                if let Some(e) = end { v.push(*e); }
+                if let Some(s) = start {
+                    v.push(*s);
+                }
+                if let Some(e) = end {
+                    v.push(*e);
+                }
                 v
             }
             SelectionValue::Multiple(dates) => dates.clone(),

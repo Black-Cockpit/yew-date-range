@@ -19,9 +19,7 @@ pub struct StaticRange {
 impl fmt::Debug for StaticRange {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         // Only include the label in the debug output.
-        f.debug_struct("StaticRange")
-            .field("label", &self.label)
-            .finish()
+        f.debug_struct("StaticRange").field("label", &self.label).finish()
     }
 }
 

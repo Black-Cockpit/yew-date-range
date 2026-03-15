@@ -27,13 +27,21 @@ impl LocaleHelper {
         CalendarLocale {
             start_of_week: Weekday::Monday,
             short_day_names: vec![
-                "Mo".into(), "Tu".into(), "We".into(),
-                "Th".into(), "Fr".into(), "Sa".into(),
+                "Mo".into(),
+                "Tu".into(),
+                "We".into(),
+                "Th".into(),
+                "Fr".into(),
+                "Sa".into(),
                 "Su".into(),
             ],
             day_names: vec![
-                "Monday".into(), "Tuesday".into(), "Wednesday".into(),
-                "Thursday".into(), "Friday".into(), "Saturday".into(),
+                "Monday".into(),
+                "Tuesday".into(),
+                "Wednesday".into(),
+                "Thursday".into(),
+                "Friday".into(),
+                "Saturday".into(),
                 "Sunday".into(),
             ],
             ..Default::default()

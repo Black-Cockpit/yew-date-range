@@ -71,15 +71,27 @@ fn test_diff_days() {
 #[test]
 fn test_diff_months() {
     assert_eq!(DateHelper::diff_months(date!(2024 - 06 - 15), date!(2024 - 01 - 15)), 5);
-    assert_eq!(DateHelper::diff_months(date!(2025 - 01 - 01), date!(2024 - 01 - 01)), 12);
-    assert_eq!(DateHelper::diff_months(date!(2024 - 01 - 01), date!(2024 - 06 - 01)), -5);
+    assert_eq!(
+        DateHelper::diff_months(date!(2025 - 01 - 01), date!(2024 - 01 - 01)),
+        12
+    );
+    assert_eq!(
+        DateHelper::diff_months(date!(2024 - 01 - 01), date!(2024 - 06 - 01)),
+        -5
+    );
 }
 
 /// Validates that is_same_day returns true only when both options contain the same date.
 #[test]
 fn test_is_same_day() {
-    assert!(DateHelper::is_same_day(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 01))));
-    assert!(!DateHelper::is_same_day(Some(date!(2024 - 01 - 01)), Some(date!(2024 - 01 - 02))));
+    assert!(DateHelper::is_same_day(
+        Some(date!(2024 - 01 - 01)),
+        Some(date!(2024 - 01 - 01))
+    ));
+    assert!(!DateHelper::is_same_day(
+        Some(date!(2024 - 01 - 01)),
+        Some(date!(2024 - 01 - 02))
+    ));
     assert!(!DateHelper::is_same_day(Some(date!(2024 - 01 - 01)), None));
     assert!(!DateHelper::is_same_day(None, Some(date!(2024 - 01 - 01))));
     assert!(!DateHelper::is_same_day(None, None));
@@ -220,20 +232,37 @@ fn test_parse_date() {
 fn test_format_date_display() {
     // Build a full set of English month names.
     let month_names: Vec<String> = vec![
-        "January".into(), "February".into(), "March".into(),
-        "April".into(), "May".into(), "June".into(),
-        "July".into(), "August".into(), "September".into(),
-        "October".into(), "November".into(), "December".into(),
+        "January".into(),
+        "February".into(),
+        "March".into(),
+        "April".into(),
+        "May".into(),
+        "June".into(),
+        "July".into(),
+        "August".into(),
+        "September".into(),
+        "October".into(),
+        "November".into(),
+        "December".into(),
     ];
-    assert_eq!(DateHelper::format_date_display(date!(2024 - 01 - 15), &month_names), "Jan 15, 2024");
-    assert_eq!(DateHelper::format_date_display(date!(2024 - 12 - 01), &month_names), "Dec 1, 2024");
+    assert_eq!(
+        DateHelper::format_date_display(date!(2024 - 01 - 15), &month_names),
+        "Jan 15, 2024"
+    );
+    assert_eq!(
+        DateHelper::format_date_display(date!(2024 - 12 - 01), &month_names),
+        "Dec 1, 2024"
+    );
 }
 
 /// Validates that format_date_display falls back to "???" when month names are empty.
 #[test]
 fn test_format_date_display_empty_names() {
     let empty: Vec<String> = vec![];
-    assert_eq!(DateHelper::format_date_display(date!(2024 - 01 - 15), &empty), "??? 15, 2024");
+    assert_eq!(
+        DateHelper::format_date_display(date!(2024 - 01 - 15), &empty),
+        "??? 15, 2024"
+    );
 }
 
 /// Validates that validate_against_constraints correctly accepts and rejects dates based on min/max bounds.
@@ -245,12 +274,28 @@ fn test_validate_against_constraints() {
     assert!(DateHelper::validate_against_constraints(d, None, None));
 
     // Within bounds should pass.
-    assert!(DateHelper::validate_against_constraints(d, Some(date!(2024 - 01 - 01)), None));
-    assert!(DateHelper::validate_against_constraints(d, None, Some(date!(2024 - 12 - 31))));
+    assert!(DateHelper::validate_against_constraints(
+        d,
+        Some(date!(2024 - 01 - 01)),
+        None
+    ));
+    assert!(DateHelper::validate_against_constraints(
+        d,
+        None,
+        Some(date!(2024 - 12 - 31))
+    ));
 
     // Outside bounds should fail.
-    assert!(!DateHelper::validate_against_constraints(d, Some(date!(2024 - 07 - 01)), None));
-    assert!(!DateHelper::validate_against_constraints(d, None, Some(date!(2024 - 05 - 31))));
+    assert!(!DateHelper::validate_against_constraints(
+        d,
+        Some(date!(2024 - 07 - 01)),
+        None
+    ));
+    assert!(!DateHelper::validate_against_constraints(
+        d,
+        None,
+        Some(date!(2024 - 05 - 31))
+    ));
 
     // Exact boundary match should pass.
     assert!(DateHelper::validate_against_constraints(d, Some(d), Some(d)));
