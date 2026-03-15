@@ -2,21 +2,23 @@
 
 [package]
 name = "yew-date-range-tailwind-example"
-version = "0.1.0"
-edition = "2021"
+description = "Tailwind CSS example application demonstrating yew-date-range with dark mode"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
-# Yew framework for WebAssembly frontend development.
-yew = { version = "0.21", features = ["csr"] }
-
 # The date range picker library.
-yew-date-range = { path = "../yew-date-range" }
+yew-date-range = { workspace = true }
+
+# Yew framework for WebAssembly frontend development.
+yew = { workspace = true }
 
 # Date and time library with WASM support.
-time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+time = { workspace = true }
 
 # Rust-to-JavaScript interop layer for WebAssembly.
-wasm-bindgen = "0.2"
+wasm-bindgen = { workspace = true }
 
 # WebAssembly browser API bindings.
-web-sys = { version = "0.3", features = ["HtmlElement"] }
+web-sys = { workspace = true, features = ["HtmlElement"] }

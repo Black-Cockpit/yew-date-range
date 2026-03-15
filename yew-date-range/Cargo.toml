@@ -1,28 +1,56 @@
-# yew-date-range — UI Layer
+# Yew Date Range — Cargo Manifest
 #
-# Yew components for the date range picker.
-# Built on top of `yew-date-range-core`, providing idiomatic Yew
-# components for calendar, date picker, and range selection.
+# Date range picker component library for Yew applications inspired by
+# react-date-range and PrimeReact Calendar. Provides Yew components,
+# pre-built UI elements, and seamless integration with the headless
+# yew-date-range-core engine.
 
 [package]
+
+# Package name as published on crates.io.
 name = "yew-date-range"
-version = "0.1.0"
-edition = "2021"
-description = "A date range picker component for Yew, inspired by react-date-range"
-license = "MIT"
+
+# Brief description of the package purpose and scope.
+description = "Date range picker component library for Yew - react-date-range inspired"
+
+# Inherited workspace metadata.
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+rust-version.workspace = true
+
+# Markdown documentation file for crates.io.
+readme = "../README.md"
+
+# Package categorization for crate registry.
+keywords = ["web", "wasm", "yew", "date-picker", "component"]
+categories = ["wasm"]
+
+# Feature Configuration
+
+[features]
+
+# Default feature set activated when none are explicitly specified.
+default = []
+
+# Dependencies
 
 [dependencies]
-# Internal core crate with models and utilities.
-yew-date-range-core = { path = "../yew-date-range-core" }
+
+# Headless date range picker engine providing core logic and state management.
+yew-date-range-core = { workspace = true }
 
 # Yew framework for WebAssembly frontend development.
-yew = { version = "0.21", features = ["csr"] }
+yew = { workspace = true }
 
 # Date and time library with WASM support.
-time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+time = { workspace = true }
 
-# WebAssembly browser API bindings.
-web-sys = { version = "0.3", features = [
+# WebAssembly browser API bindings for DOM element access.
+web-sys = { workspace = true, features = [
     "HtmlElement",
     "HtmlInputElement",
     "MouseEvent",
@@ -36,7 +64,7 @@ web-sys = { version = "0.3", features = [
 ] }
 
 # Rust-to-JavaScript interop layer for WebAssembly.
-wasm-bindgen = "0.2"
+wasm-bindgen = { workspace = true }
 
 # Gloo utilities for WebAssembly browser APIs.
-gloo = { version = "0.11", features = ["timers", "events"] }
+gloo = { workspace = true }

@@ -310,7 +310,7 @@ cargo test --package e2e-tests
 
 ## Contributing
 
-Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a pull request. The project enforces strict source code rules including one type per file, comprehensive documentation.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a pull request. The project enforces strict source code rules including one type per file, comprehensive documentation. 
 
 ## License
 

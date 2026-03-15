@@ -1,25 +1,49 @@
-# yew-date-range-core — Core Engine
+# Yew Date Range Core — Cargo Manifest
 #
-# Headless core library for the yew-date-range date picker.
-# Contains models, utilities, and date logic without any UI dependencies.
+# A headless date range picker engine for Rust/WASM applications.
+# Provides the core date logic including models, utilities, date helpers,
+# range calculations, and locale support — all without UI dependencies.
 
 [package]
+
+# Package name as published on crates.io.
 name = "yew-date-range-core"
-version = "0.1.0"
-edition = "2021"
-description = "Core logic for yew-date-range: models, utilities, and date helpers"
-license = "MIT"
+
+# Brief description of the package purpose and scope.
+description = "Headless date range picker engine for Rust/WASM - react-date-range inspired"
+
+# Inherited workspace metadata.
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+rust-version.workspace = true
+
+# Markdown documentation file for crates.io.
+readme = "../README.md"
+
+# Package categorization for crate registry.
+keywords = ["web", "wasm", "date-picker", "headless", "calendar"]
+categories = ["wasm"]
+
+# Dependencies
 
 [dependencies]
+
 # Date and time library with WASM support.
-time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+time = { workspace = true }
 
 # JavaScript interop for WASM date access.
-js-sys = "0.3"
+js-sys = { workspace = true }
 
 # Rust-to-JavaScript interop layer for WebAssembly.
-wasm-bindgen = "0.2"
+wasm-bindgen = { workspace = true }
+
+# Development Dependencies
 
 [dev-dependencies]
-# Date macro support for tests.
-time = { version = "0.3", features = ["macros"] }
+
+# Date and time library with macro support for tests.
+time = { workspace = true }

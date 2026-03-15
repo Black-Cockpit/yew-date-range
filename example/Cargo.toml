@@ -2,15 +2,17 @@
 
 [package]
 name = "yew-date-range-example"
-version = "0.1.0"
-edition = "2021"
+description = "Example application demonstrating yew-date-range features"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
+# The date range picker library.
+yew-date-range = { workspace = true }
+
 # Yew framework for WebAssembly frontend development.
-yew = { version = "0.21", features = ["csr"] }
+yew = { workspace = true }
 
 # Date and time library with macro support.
-time = { version = "0.3", features = ["formatting", "parsing", "macros"] }
-
-# The date range picker library.
-yew-date-range = { path = "../yew-date-range" }
+time = { workspace = true }

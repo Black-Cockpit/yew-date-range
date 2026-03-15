@@ -25,15 +25,30 @@ members = [
 version = "0.1.0"
 
 # Rust edition for language and compiler features.
-edition = "2021"
+edition = "2024"
+
+# Maintainers and organizational ownership.
+authors = ["Hasni Mehdi <hasnimehdi@outlook.com>"]
 
 # Open-source license.
 license = "MIT"
+
+# Source code repository.
+repository = "https://github.com/Black-Cockpit/yew-date-range"
+
+# Official project homepage.
+homepage = "https://github.com/Black-Cockpit/yew-date-range"
+
+# Minimum supported Rust version.
+rust-version = "1.85"
 
 # Shared workspace dependencies referenced by member crates.
 [workspace.dependencies]
 
 # Internal crate references.
+# Both `path` (for local development) and `version` (for crates.io resolution)
+# are specified so that `cargo publish` resolves the dependency from the registry
+# while local builds use the workspace path.
 yew-date-range-core = { path = "./yew-date-range-core", version = "0.1.0" }
 yew-date-range = { path = "./yew-date-range", version = "0.1.0" }
 
@@ -54,6 +69,27 @@ wasm-bindgen = "0.2"
 
 # Gloo utilities for WebAssembly browser APIs.
 gloo = { version = "0.11", features = ["timers", "events"] }
+
+# Browser automation via Playwright for Rust (dev-only).
+playwright = "0.0.20"
+
+# Async runtime for test execution (dev-only).
+tokio = { version = "1", features = ["full"] }
+
+# Static file server for serving built examples (dev-only).
+actix-web = "4"
+
+# Static file serving middleware (dev-only).
+actix-files = "0.6"
+
+# CORS middleware for test server (dev-only).
+actix-cors = "0.7"
+
+# Serialization framework for encoding and decoding structured data.
+serde = { version = "1", features = ["derive"] }
+
+# JSON parser and serializer for structured data.
+serde_json = "1"
 
 # Deny warnings in clippy
 [workspace.metadata]

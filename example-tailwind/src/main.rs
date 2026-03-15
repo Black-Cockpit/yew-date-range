@@ -157,13 +157,12 @@ fn app() -> Html {
     {
         let dark_mode = dark_mode.clone();
         use_effect_with(dark_mode.clone(), move |dm| {
-            if let Some(window) = web_sys::window() {
-                if let Some(doc) = window.document() {
-                    if let Some(el) = doc.document_element() {
-                        let cls = if **dm { "dark" } else { "light" };
-                        let _ = el.set_attribute("class", cls);
-                    }
-                }
+            if let Some(window) = web_sys::window()
+                && let Some(doc) = window.document()
+                && let Some(el) = doc.document_element()
+            {
+                let cls = if **dm { "dark" } else { "light" };
+                let _ = el.set_attribute("class", cls);
             }
             || ()
         });

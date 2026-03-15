@@ -5,28 +5,30 @@
 
 [package]
 name = "e2e-tests"
-version = "0.1.0"
-edition = "2021"
+description = "End-to-end browser tests for yew-date-range examples"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 publish = false
 
 [dev-dependencies]
 # Browser automation via Playwright for Rust.
-playwright = "0.0.20"
+playwright = { workspace = true }
 
 # Async runtime for test execution.
-tokio = { version = "1", features = ["full"] }
+tokio = { workspace = true }
 
 # Static file server for serving the built examples.
-actix-web = "4"
+actix-web = { workspace = true }
 
 # Static file serving middleware.
-actix-files = "0.6"
+actix-files = { workspace = true }
 
 # CORS middleware for the test server.
-actix-cors = "0.7"
+actix-cors = { workspace = true }
 
 # Serialization for Playwright JS interop.
-serde = { version = "1", features = ["derive"] }
+serde = { workspace = true }
 
 # JSON serialization for Playwright JS interop.
-serde_json = "1"
+serde_json = { workspace = true }
