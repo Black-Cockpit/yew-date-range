@@ -47,22 +47,19 @@ jobs:
       - name: Build UI crate (wasm)
         run: cargo build --package yew-date-range --target wasm32-unknown-unknown
 
-      # Extract crate versions from Cargo.toml for duplicate detection.
-      - name: Get crate versions
-        id: versions
+      # Extract yew-date-range-core version and check if already published.
+      - name: Get yew-date-range-core version
+        id: core_version
         run: |
-          CORE_VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "yew-date-range-core") | .version')
-          UI_VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "yew-date-range") | .version')
-          echo "core_version=$CORE_VERSION" >> "$GITHUB_OUTPUT"
-          echo "ui_version=$UI_VERSION" >> "$GITHUB_OUTPUT"
+          VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "yew-date-range-core") | .version')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      # Check if the core crate version already exists on crates.io.
       - name: Check if yew-date-range-core is already published
         id: check_core
         run: |
-          if cargo info yew-date-range-core@${{ steps.versions.outputs.core_version }} >/dev/null 2>&1; then
+          if cargo info yew-date-range-core@${{ steps.core_version.outputs.version }} >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "yew-date-range-core@${{ steps.versions.outputs.core_version }} already published, skipping."
+            echo "yew-date-range-core@${{ steps.core_version.outputs.version }} already published, skipping."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
@@ -80,13 +77,19 @@ jobs:
         if: steps.check_core.outputs.exists == 'false'
         run: sleep 30
 
-      # Check if the UI crate version already exists on crates.io.
+      # Extract yew-date-range version and check if already published.
+      - name: Get yew-date-range version
+        id: ui_version
+        run: |
+          VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "yew-date-range") | .version')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Check if yew-date-range is already published
         id: check_ui
         run: |
-          if cargo info yew-date-range@${{ steps.versions.outputs.ui_version }} >/dev/null 2>&1; then
+          if cargo info yew-date-range@${{ steps.ui_version.outputs.version }} >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "yew-date-range@${{ steps.versions.outputs.ui_version }} already published, skipping."
+            echo "yew-date-range@${{ steps.ui_version.outputs.version }} already published, skipping."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
