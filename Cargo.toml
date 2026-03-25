@@ -13,8 +13,8 @@ resolver = "2"
 members = [
     "yew-date-range-core",
     "yew-date-range",
-    "example",
-    "example-tailwind",
+    "examples/default",
+    "examples/tailwind",
     "e2e-tests",
 ]
 
@@ -22,7 +22,7 @@ members = [
 [workspace.package]
 
 # Current release version.
-version = "0.1.0"
+version = "0.1.1"
 
 # Rust edition for language and compiler features.
 edition = "2024"
@@ -53,7 +53,7 @@ yew-date-range-core = { path = "./yew-date-range-core", version = "0.1.0" }
 yew-date-range = { path = "./yew-date-range", version = "0.1.0" }
 
 # Yew framework for WebAssembly frontend development.
-yew = { version = "0.23", features = ["csr"] }
+yew = { version = "0.22", features = ["csr"] }
 
 # Date and time library with WASM support.
 time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
@@ -68,7 +68,7 @@ web-sys = "0.3"
 wasm-bindgen = "0.2"
 
 # Gloo utilities for WebAssembly browser APIs.
-gloo = { version = "0.11", features = ["timers", "events"] }
+gloo = { version = "0.12.0", features = ["timers", "events"] }
 
 # Browser automation via Playwright for Rust (dev-only).
 playwright = "0.0.20"
