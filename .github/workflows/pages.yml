@@ -71,12 +71,12 @@ jobs:
       # Build the default CSS example with the Pages sub-path.
       - name: Build default example
         run: trunk build --release --public-url /yew-date-range/example/
-        working-directory: example
+        working-directory: examples/default
 
       # Build the Tailwind CSS example with the Pages sub-path.
       - name: Build Tailwind example
         run: trunk build --release --public-url /yew-date-range/example-tailwind/
-        working-directory: example-tailwind
+        working-directory: examples/tailwind
 
       # Assemble the final site directory with all three routes.
       - name: Assemble site
@@ -84,8 +84,8 @@ jobs:
           mkdir -p _site/example
           mkdir -p _site/example-tailwind
           cp docs/index.html _site/index.html
-          cp -r example/dist/* _site/example/
-          cp -r example-tailwind/dist/* _site/example-tailwind/
+          cp -r examples/default/dist/* _site/example/
+          cp -r examples/tailwind/dist/* _site/example-tailwind/
 
       # Configure and upload the assembled site as a Pages artifact.
       - name: Setup GitHub Pages

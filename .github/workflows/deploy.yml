@@ -56,7 +56,7 @@ jobs:
 
       # Wait for crates.io index to propagate the new core version.
       - name: Wait for crates.io index update
-        run: sleep 30
+        run: sleep 60
 
       - name: Publish yew-date-range to crates.io
         env:
