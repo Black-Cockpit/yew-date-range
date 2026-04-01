@@ -22,7 +22,7 @@ members = [
 [workspace.package]
 
 # Current release version.
-version = "0.1.1"
+version = "0.2.0"
 
 # Rust edition for language and compiler features.
 edition = "2024"
@@ -49,23 +49,23 @@ rust-version = "1.85"
 # Both `path` (for local development) and `version` (for crates.io resolution)
 # are specified so that `cargo publish` resolves the dependency from the registry
 # while local builds use the workspace path.
-yew-date-range-core = { path = "./yew-date-range-core", version = "0.1.0" }
-yew-date-range = { path = "./yew-date-range", version = "0.1.0" }
+yew-date-range-core = { path = "./yew-date-range-core", version = "0.2.0" }
+yew-date-range = { path = "./yew-date-range", version = "0.2.0" }
 
 # Yew framework for WebAssembly frontend development.
-yew = { version = "0.22", features = ["csr"] }
+yew = { version = "0.23.0", features = ["csr"] }
 
 # Date and time library with WASM support.
-time = { version = "0.3", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
+time = { version = "0.3.47", features = ["formatting", "parsing", "macros", "wasm-bindgen"] }
 
 # JavaScript interop for WASM date access.
-js-sys = "0.3"
+js-sys = "0.3.94"
 
 # WebAssembly browser API bindings.
-web-sys = "0.3"
+web-sys = "0.3.94"
 
 # Rust-to-JavaScript interop layer for WebAssembly.
-wasm-bindgen = "0.2"
+wasm-bindgen = "0.2.117"
 
 # Gloo utilities for WebAssembly browser APIs.
 gloo = { version = "0.12.0", features = ["timers", "events"] }
@@ -74,22 +74,22 @@ gloo = { version = "0.12.0", features = ["timers", "events"] }
 playwright = "0.0.20"
 
 # Async runtime for test execution (dev-only).
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1.50.0", features = ["full"] }
 
 # Static file server for serving built examples (dev-only).
-actix-web = "4"
+actix-web = "4.13.0"
 
 # Static file serving middleware (dev-only).
-actix-files = "0.6"
+actix-files = "0.6.10"
 
 # CORS middleware for test server (dev-only).
-actix-cors = "0.7"
+actix-cors = "0.7.1"
 
 # Serialization framework for encoding and decoding structured data.
-serde = { version = "1", features = ["derive"] }
+serde = { version = "1.0.228", features = ["derive"] }
 
 # JSON parser and serializer for structured data.
-serde_json = "1"
+serde_json = "1.0.149"
 
 # Deny warnings in clippy
 [workspace.metadata]
