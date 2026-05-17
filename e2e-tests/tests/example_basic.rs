@@ -342,6 +342,35 @@ async fn test_popup_range_input_and_overlay() -> Result<(), E> {
     Ok(())
 }
 
+/// Validates that the popup range picker (example 5) paints the
+/// selected-range highlight with the custom range_color prop value.
+#[tokio::test]
+async fn test_popup_range_uses_custom_range_color() -> Result<(), E> {
+    let page = page().await?;
+    let f = page.main_frame();
+
+    // Open the popup range picker overlay.
+    f.click_builder(".example-section:nth-of-type(5) .rdrDatePickerInput")
+        .click()
+        .await?;
+    f.wait_for_selector_builder(".rdrOverlay").wait_for_selector().await?;
+
+    // Click a selectable day to set the range start while the overlay stays open.
+    f.click_builder(".rdrOverlay .rdrDay:not(.rdrDayPassive):not(.rdrDayDisabled):not(.rdrDayEmpty)")
+        .click()
+        .await?;
+    tokio::time::sleep(PAUSE).await;
+
+    // Verify the start edge highlight uses the custom range_color value.
+    let edge_style = f.get_attribute(".rdrOverlay .rdrStartEdge", "style", None).await?;
+    assert!(
+        edge_style.as_deref().unwrap_or("").contains("#9b59b6"),
+        "range_color should paint the start edge, got style: {edge_style:?}"
+    );
+
+    Ok(())
+}
+
 /// Validates that pressing Escape closes the popup overlay.
 #[tokio::test]
 async fn test_popup_escape_to_close() -> Result<(), E> {

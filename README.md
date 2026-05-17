@@ -118,6 +118,17 @@ Versatile date picker supporting single, range, and multiple selection modes wit
 />
 ```
 
+The optional `range_color` prop sets the highlight fill for the selected range (in-range days and start/end edges). It accepts any valid CSS color expression, including custom properties such as `var(--brand)`. When omitted, the crate default color is used.
+
+```rust
+<DatePicker
+    selection_mode={SelectionMode::Range}
+    value={value}
+    on_change={on_change}
+    range_color={Some("#9b59b6".to_string())}
+/>
+```
+
 ### DateRange
 
 Standalone calendar with range selection (no sidebar).

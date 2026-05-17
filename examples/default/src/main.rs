@@ -433,7 +433,7 @@ fn app() -> Html {
                     <p class="example-desc">
                         {t.s5_desc}{" "}
                         {"Props: "}
-                        <code>{"display_mode=Popup, popup_trigger=Click, date_format=\"dd/MM/yyyy\", show_icon=true"}</code>
+                        <code>{"display_mode=Popup, popup_trigger=Click, date_format=\"dd/MM/yyyy\", show_icon=true, range_color=\"#9b59b6\""}</code>
                     </p>
                     <div class="example-container">
                         <DatePicker
@@ -449,6 +449,7 @@ fn app() -> Html {
                             show_clear_button={true}
                             date_format={DateFormat::new("dd/MM/yyyy")}
                             placeholder={t.click_range}
+                            range_color={Some("#9b59b6".to_string())}
                             locale={locale.clone()}
                         />
                     </div>

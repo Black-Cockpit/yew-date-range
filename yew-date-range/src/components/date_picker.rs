@@ -160,6 +160,15 @@ pub struct DatePickerProps {
     /// Initial shown date (the month to display initially).
     #[prop_or_default]
     pub shown_date: Option<Date>,
+
+    /// CSS color for the selected-range highlight fill.
+    ///
+    /// Applies to in-range days and the start/end edges across every
+    /// selection mode. When `None`, the crate default color is used.
+    /// Any valid CSS color expression is accepted, including custom
+    /// properties such as `var(--brand)`.
+    #[prop_or_default]
+    pub range_color: Option<String>,
 }
 
 /// The DatePicker component: a PrimeReact-style date picker with inline and popup modes.
@@ -201,17 +210,27 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         }
     };
 
+    // Apply the optional highlight color to a range when one is supplied via props.
+    let apply_range_color = |range_selection: RangeSelection| match &props.range_color {
+        Some(color) => range_selection.with_color(color),
+        None => range_selection,
+    };
+
     // Convert the selection value into a vector of range selections for the calendar.
     let ranges_for_calendar: Vec<RangeSelection> = match &props.value {
         SelectionValue::Single(date) => {
-            vec![RangeSelection::new("selection").with_dates(*date, *date)]
+            vec![apply_range_color(
+                RangeSelection::new("selection").with_dates(*date, *date),
+            )]
         }
         SelectionValue::Range { start, end } => {
-            vec![RangeSelection::new("selection").with_dates(*start, *end)]
+            vec![apply_range_color(
+                RangeSelection::new("selection").with_dates(*start, *end),
+            )]
         }
         SelectionValue::Multiple(dates) => dates
             .iter()
-            .map(|d| RangeSelection::new("selection").with_dates(Some(*d), Some(*d)))
+            .map(|d| apply_range_color(RangeSelection::new("selection").with_dates(Some(*d), Some(*d))))
             .collect(),
     };
 

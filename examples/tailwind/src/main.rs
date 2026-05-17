@@ -470,7 +470,7 @@ fn app() -> Html {
                 // 5. Popup range picker with dd/MM/yyyy format.
                 <section class="mb-12">
                     <h2 class={heading(is_dark)}>{txt.s5_title}</h2>
-                    <p class={desc(is_dark)}>{"display_mode=Popup, date_format=\"dd/MM/yyyy\", show_icon=true"}</p>
+                    <p class={desc(is_dark)}>{"display_mode=Popup, date_format=\"dd/MM/yyyy\", show_icon=true, range_color=\"#8b5cf6\""}</p>
                     <div class={card(is_dark)}>
                         <DatePicker
                             selection_mode={SelectionMode::Range}
@@ -480,6 +480,7 @@ fn app() -> Html {
                             show_icon={true} show_today_button={true} show_clear_button={true}
                             date_format={DateFormat::new("dd/MM/yyyy")}
                             placeholder={txt.click_range}
+                            range_color={Some("#8b5cf6".to_string())}
                             locale={locale.clone()}
                         />
                     </div>
