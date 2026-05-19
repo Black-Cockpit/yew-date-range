@@ -327,6 +327,7 @@ impl CalendarRenderer {
                     state.is_selected = true;
                     state.is_start_edge = true;
                     state.is_end_edge = true;
+                    state.color = range.color.clone();
                 }
             }
         }
